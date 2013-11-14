@@ -1,13 +1,13 @@
 <?PHP if (!defined('__SITE_PATH')) exit('No direct script access allowed');
 
 
-class Library_Login {
+class Model_Login extends Core_Model  {
 
 	function __construct() {
-		$value = $this->session->get('user_username');
+		$value = $this->LibSession->get('user_username');
 		if(empty($value))
 			$this->cookieLogin();
-		elseif(time() - $this->session->get("user_sessionSetTime") > 60*5)
+		elseif(time() - $this->LibSession->get("user_sessionSetTime") > 60*5)
 			$this->updateUserSession();
 	}
 
@@ -75,10 +75,10 @@ class Library_Login {
 
 	function logout(){
 		$this->load->library('Secure'); 
-		if(isset($_COOKIE['user_ses']) && $this->session->get('user_Salt') != null) {
+		if(isset($_COOKIE['user_ses']) && $this->LibSession->get('user_Salt') != null) {
 			$data = explode(':', $_COOKIE['user_ses']);
 			if(count($data) == 2) {
-				$hash = $this->LibSecure->hashPassword($data[1], $this->session->get('user_Salt'));
+				$hash = $this->LibSecure->hashPassword($data[1], $this->LibSession->get('user_Salt'));
 				$this->db->where('token', $hash);
 				$this->db->delete('LoginSession');
 			}
@@ -89,8 +89,8 @@ class Library_Login {
 	}
 
 	function updateUserSession(){
-		if($this->session->get("user_id") != null){
-			$this->db->where("id", $this->session->get("user_id"));
+		if($this->LibSession->get("user_id") != null){
+			$this->db->where("id", $this->LibSession->get("user_id"));
 			$data = $this->db->get("Users");
 			$this->saveUserToSession($data[0]);
 			return true;
@@ -99,13 +99,13 @@ class Library_Login {
 	}
 
 	function saveUserToSession($user, $delete = false) { 
-		$this->session->set("user_id", $delete ? null : $user['id']);
-		$this->session->set("user_username", $delete ? null : $user['username']);
-		$this->session->set("user_salt", $delete ? null : substr($user['password'],0,8));
-		$this->session->set("user_level", $delete ? null : $user['level']);
-		$this->session->set("user_email", $delete ? null : $user['email']);
-		$this->session->set("user_blocked", $delete ? null : $user['blocked']);
-		$this->session->set("user_registrationDate", $delete ? null : datetimeToTimestamp($user['registrationDate']));
-		$this->session->set("user_sessionSetTime", $delete ? null : time());
+		$this->LibSession->set("user_id", $delete ? null : $user['id']);
+		$this->LibSession->set("user_username", $delete ? null : $user['username']);
+		$this->LibSession->set("user_salt", $delete ? null : substr($user['password'],0,8));
+		$this->LibSession->set("user_level", $delete ? null : $user['level']);
+		$this->LibSession->set("user_email", $delete ? null : $user['email']);
+		$this->LibSession->set("user_blocked", $delete ? null : $user['blocked']);
+		$this->LibSession->set("user_registrationDate", $delete ? null : datetimeToTimestamp($user['registrationDate']));
+		$this->LibSession->set("user_sessionSetTime", $delete ? null : time());
 	}
 }
