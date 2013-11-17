@@ -67,7 +67,7 @@ class Controller_User extends Core_Controller {
       if($this->uri->segment(3) == 'json')
          echo json_encode($data);
       elseif( !$_registerSuccessful)
-         $this->load->view('userLogin', $data);
+         $this->load->view('userRegister', $data);
       else
          redirect("home");
    }

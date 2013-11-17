@@ -27,17 +27,18 @@ class Model_Validate extends Core_Model {
             $this->load->model('User');
             $this->errors = "";
             
+            $user = $this->ModelUser->byEmail($email);
+            $regexEmail = "/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[.][A-z]{2,4}$/";
             //When email is filled in check email
-            if(strlen($email) > 0) {
-                    $user = $this->ModelUser->byEmail($email);
-                    //check if email is valid
-                    $regexEmail = "/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[.][A-z]{2,4}$/";
-                    if (!preg_match($regexEmail, $email))
-                            $this->errors .= "<p>Email is invalid.</p>";
-                    //check if email is already taken
-                    elseif($user != null && ($usernameEdit == null || $user['username'] != $usernameEdit))
-                            $this->errors .= "<p>Email is already used.</p>";
-            }
+            if(strlen($email) == 0)
+                $this->errors .= "<p>Email can't be blank.</p>";
+            //check if email is valid
+            elseif (!preg_match($regexEmail, $email))
+                    $this->errors .= "<p>Email is invalid.</p>";
+            //check if email is already taken
+            elseif($user != null && ($usernameEdit == null || $user['username'] != $usernameEdit))
+                    $this->errors .= "<p>Email is already used.</p>";
+        
             return empty($this->errors);
     }
 
