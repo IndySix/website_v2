@@ -12,7 +12,40 @@ class Controller_User extends Core_Controller {
    }
 
    function login(){
-   	echo "login";
+   	if($this->ModelLogin->isLoggedin()){
+         $data['titleMessage'] = 'Already Loggedin';
+         $data['message']      = 'You are already loggedin!';
+         $this->load->view('message', $data);
+         return;
+      }
+
+      $_loginSuccessful = false;
+      $data['username'] = '';
+      $data['password'] = '';
+      $data['error_login']    = '';
+
+      if(isset($_POST['login'])){
+         $data['username'] = $_POST['username'];
+         $data['password'] = $_POST['password'];
+
+         $_loginSuccessful = $this->ModelLogin->user($_POST['username'], $_POST['password']);
+         
+         if( !$_loginSuccessful)
+            $data['error_login'] = "The combination of the username and password is incorrect!";
+      }
+
+      if($this->uri->segment(3) == 'json')
+         echo json_encode($data);
+      elseif( !$_loginSuccessful)
+         $this->load->view('userLogin', $data);
+      else
+         redirect("home");
+
+   }
+
+   function logout(){
+      $this->ModelLogin->logout();
+      $this->login();
    }
 
    function register(){
