@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to MartensMVC</title>
-
+	<script src="<?PHP echo baseUrl('data/js/jquery-1.10.2.min.js') ?>"> jQuery.noConflict(); </script>
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -66,5 +66,7 @@
 	</style>
 </head>
 <body>
-
+<div id="dialog" title="Basic dialog">
+<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
 <div id="container">
