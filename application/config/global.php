@@ -36,5 +36,15 @@ function timestampToDatetime($str){
   return date('Y-m-d H:i:s', $str);
 }
 
+function calculateAge($date){
+  if($date == 0)
+    return 0;
+  
+  $birthdate = new DateTime($date);
+  $today     = new DateTime();
+  $interval  = $today->diff($birthdate);
+  return $interval->format('%y');
+}
+
 /* End of file global.php */
 /* Location: ./application/config/global.php */

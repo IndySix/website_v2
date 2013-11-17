@@ -3,12 +3,48 @@
 class Controller_User extends Core_Controller {
    
   	function index(){
-      $this->ModelLogin->checkLogin();
+      $this->view();
    }
 
    function view(){
       $this->ModelLogin->checkLogin();
-   	echo "view";
+   	
+      $this->load->model('User');
+      $data['owner'] = false;
+
+      $user_id = $this->uri->segment(3);
+      if($user_id == null || !is_numeric($user_id))
+         $user_id = $this->LibSession->get('user_id');
+
+      $user = $this->ModelUser->byId($user_id);
+
+      if(!empty($user)){
+         $data['owner'] = $this->LibSession->get('user_id') == $user_id ? true : false;
+         $data['user_id']  = $user['id'];
+         $data['username'] = $user['username'];
+         $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
+         $data['avatarUrl'] = baseUrl( 'data/avatars/'.$user['avatar'] );
+         $data['difficulty'] = $user['difficulty'];
+         
+         $data['userinfo'] = array();
+         if(!empty($user['place']))
+            $data['userinfo']['Place'] = $user['place'];
+
+         $age = calculateAge($user['birthday'] );
+         if($age > 0)
+            $data['userinfo']['Age'] = $age.' years';
+
+         if(!empty($user['gender']))
+            $data['userinfo']['Gender'] = $user['gender'] == 'm' ? 'Men' : 'Woman';
+
+         $data['aboutMe'] = $user['aboutMe'];           
+
+         $this->load->view('userView', $data);
+      } else {
+         $data['titleMessage'] = 'Profile does not exists';
+         $data['message']      = 'The profile that you are looking for does not exists!';
+         $this->load->view('message', $data);
+      }
    }
 
    function login(){
@@ -40,7 +76,6 @@ class Controller_User extends Core_Controller {
          $this->load->view('userLogin', $data);
       else
          redirect("home");
-
    }
 
    function logout(){
