@@ -16,6 +16,25 @@ if (!defined('__SITE_PATH'))
   | __CONTROLLER_NAME     Name of the controller.
   |
  */
+function datetimeToTimestamp($str) {
+    if(substr($str, 0,1) == '0')
+      return 0;
+
+    list($date, $time) = explode(' ', $str);
+    list($year, $month, $day) = explode('-', $date);
+    list($hour, $minute, $second) = explode(':', $time);
+    
+    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
+    
+    return $timestamp;
+}
+
+function timestampToDatetime($str){
+  if(!is_numeric($str))
+      return "0000-00-00 00:00:00";
+
+  return date('Y-m-d H:i:s', $str);
+}
 
 /* End of file global.php */
 /* Location: ./application/config/global.php */

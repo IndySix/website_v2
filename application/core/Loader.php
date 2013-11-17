@@ -128,17 +128,15 @@ class Core_Loader {
         $varName    = 'Model'.$name;
         $className  = 'Model_'.$name;
 
-        if (!load_class($name, "models")) {
-            throw new Exception("Model file not exists '" . $name . "'");
-        }
+        load_class($name, "models");
+        
         if (!class_exists($className)) {
             throw new Exception("Model class not exists '" . $name . "'");
         }
 
-        if (isset(Core_Controller::get_instance()->$varName)) {
-            throw new Exception("Model already loaded '" . $name . "'");
+        if (!isset(Core_Controller::get_instance()->$varName)) {
+            Core_Controller::get_instance()->$varName = new $className();
         }
-        Core_Controller::get_instance()->$varName = new $className();
     }
 
     /**
@@ -155,17 +153,15 @@ class Core_Loader {
         $varName    = 'Lib'.$name;
         $className  = 'Library_'.$name;
 
-        if (!load_class($name, "libraries")) {
-            throw new Exception("Library file not exists '" . $name . "'");
-        }
+        load_class($name, "libraries");
+
         if (!class_exists($className)) {
             throw new Exception("Library class not exists '" . $name . "'");
         }
 
-        if (isset(Core_Controller::get_instance()->$varName)) {
-            throw new Exception("Library already loaded '" . $name . "'");
+        if (!isset(Core_Controller::get_instance()->$varName)) {
+            Core_Controller::get_instance()->$varName = new $className();
         }
-        Core_Controller::get_instance()->$varName = new $className();
     }
 
     /**

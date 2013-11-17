@@ -106,6 +106,7 @@ class Model_Login extends Core_Model  {
 		$this->LibSession->set("user_email", $delete ? null : $user['email']);
 		$this->LibSession->set("user_blocked", $delete ? null : $user['blocked']);
 		$this->LibSession->set("user_registrationDate", $delete ? null : datetimeToTimestamp($user['registrationDate']));
+		$this->LibSession->set("user_avatar", $delete ? null : $user['avatar']);
 		$this->LibSession->set("user_sessionSetTime", $delete ? null : time());
 	}
 }

@@ -21,7 +21,7 @@ if (!defined('__SITE_PATH'))
  *
  * If this is not set then MartensMVC will guess the protocol, domain and
  * path to your installation. */
-$baseURL = 'https://192.168.2.210/MartensMVC/';
+$baseURL = 'http://localhost/projecten/website_v2/';
 
 
 /* -------------------------------------------------------------------
@@ -62,7 +62,7 @@ $defaultEmailName = 'MartensMCV';
  * Example:
  *      $autoload['libraries'] = array('Databse', 'Mail', 'Upload');
  */
-$autoload['libraries'] = array();
+$autoload['libraries'] = array('Database', 'Session');
 
 
 /* -------------------------------------------------------------------
@@ -71,7 +71,7 @@ $autoload['libraries'] = array();
  * Example:
  *      $autoload['model'] = array('model1', 'model2');
  */
-$autoload['model'] = array();
+$autoload['model'] = array('Login');
 
 
 /* -------------------------------------------------------------------

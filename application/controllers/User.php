@@ -3,8 +3,6 @@
 class Controller_User extends Core_Controller {
    
   	function index(){
-    	$this->view();
-    	$this->ModelLogin->updateUserSession();
    	}
 
    	function view(){
