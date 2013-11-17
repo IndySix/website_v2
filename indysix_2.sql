@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 17, 2013 at 06:09 
+-- Generation Time: Nov 17, 2013 at 07:30 
 -- Server version: 5.6.12
 -- PHP Version: 5.5.3
 
@@ -36,13 +36,6 @@ CREATE TABLE IF NOT EXISTS `LoginSession` (
   PRIMARY KEY (`username`,`token`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `LoginSession`
---
-
-INSERT INTO `LoginSession` (`username`, `token`, `ip`, `loginDate`) VALUES
-('maikel', 'b7043f3890d1af320af14230a52dcd548026a726e7010dab7c923233dc304f29b0c159fa1f3c45bb9274f8cfae805b907113a8e89a6f238457dbe49b1dab002417a6ee6e', '127.0.0.1', '2013-11-17 17:08:23');
-
 -- --------------------------------------------------------
 
 --
@@ -72,14 +65,21 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `level` int(11) DEFAULT '0',
   `blocked` int(1) NOT NULL DEFAULT '0',
   `registrationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `avatar` varchar(32) NOT NULL DEFAULT 'noAvatar.jpg',
+  `avatar` varchar(32) NOT NULL DEFAULT 'noavatar.jpg',
   `difficulty` varchar(64) DEFAULT 'Rookie',
-  `woonplaats` varchar(128) NOT NULL,
-  `geboortedatum` date NOT NULL DEFAULT '0000-00-00',
-  `geslaccht` char(1) NOT NULL,
+  `place` varchar(128) NOT NULL,
+  `birthday` date NOT NULL DEFAULT '0000-00-00',
+  `gender` char(1) NOT NULL,
   `aboutMe` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+
+--
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`id`, `username`, `password`, `email`, `validEmail`, `level`, `blocked`, `registrationDate`, `avatar`, `difficulty`, `place`, `birthday`, `gender`, `aboutMe`) VALUES
+(25, 'krukas', 'f079eff2bd6c354e8896d713d3d9ff0fb6413165ba04f6fea38a153c0772a653c37bc5604314368f7b7c72cb89687b80c867f76ed636bbc2fe3b16a7f238c0a15dd4f273', 'test123@test.nl', 1, 0, 0, '2013-11-17 17:18:28', 'noavatar.jpg', 'Rookie', 'Utrecht', '1992-11-13', 'm', 'Somthing about me');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
