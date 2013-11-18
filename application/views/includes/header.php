@@ -15,6 +15,8 @@
 			<img src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="60px">
 		</a>
 		<a href="<?PHP echo baseUrl('user') ?>"><?PHP echo $this->LibSession->get('user_username') ?></a>
+		<a href="<?PHP echo baseUrl('level/') ?>">Levels</a>
+
 		<a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
 		<hr>
 

@@ -3,7 +3,7 @@
 class Controller_Level extends Core_Controller {
    
   	function index(){
-      $this->view();
+      $this->all();
    }
 
    function view(){
@@ -31,4 +31,23 @@ class Controller_Level extends Core_Controller {
          $this->load->view('message', $data);
       }
    }
+
+   function all(){
+
+      $this->load->model('Level');
+
+      $levels = $this->ModelLevel->all();
+
+      if(!empty($levels)){
+         $data['levels'] = $levels;
+         $this->load->view('levelsView', $data);
+      } else {
+         $data['titleMessage'] = 'Error loading levels';
+         $data['message']      = 'Cannot load the list of levels!';
+         $this->load->view('message', $data);
+      }
+
+   }
+
+
 }        

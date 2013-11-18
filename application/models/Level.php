@@ -9,6 +9,12 @@ class Model_Level extends Core_Model  {
 		return $this->returnLevel($result);
 	}
 
+	public function all(){
+		$this->db->reset();
+		$result = $this->db->get('Levels');
+		return $result;
+	}
+
 	private function returnLevel($result){
 		if(!empty($result))
 			return $result[0];
