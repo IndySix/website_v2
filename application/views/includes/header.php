@@ -5,8 +5,10 @@
 	<title>Welcome to MartensMVC</title>
 	
 	<script src="<?PHP echo baseUrl('data/js/jquery-1.10.2.min.js') ?>"> jQuery.noConflict(); </script>
+	<script src="<?PHP echo baseUrl('data/js/jquery-ui-1.10.3.custom.min.js') ?>"></script>
 	
 	<link href="<?PHP echo baseUrl('data/css/style.css') ?>" media="all" rel="stylesheet" type="text/css" />
+	<link href="<?PHP echo baseUrl('data/css/jquery-ui-1.10.3.custom.min.css') ?>" media="all" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="container">

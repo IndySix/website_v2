@@ -163,4 +163,97 @@ class Controller_User extends Core_Controller {
       }
       $this->load->view('message', $data); 
    }
+
+   function edit(){
+      $this->ModelLogin->checkLogin();
+      
+      $this->load->model('User');
+      $user = $this->ModelUser->byId( $this->LibSession->get('user_id') );
+      $_validate_user      = null;
+      $_editSuccessful     = false;
+      $data['password']    = '';
+      $data['password2']   = '';
+      $data['email']       = '';
+      $data['difficulty']  = '';
+      $data['place']       = '';
+      $data['birthday']    = '';
+      $data['gender']      = '';
+      $data['aboutMe']     = '';
+
+      $data['error_form']     = '';
+      $data['error_password'] = '';
+      $data['error_email']    = '';
+      $data['error_place']    = '';
+      $data['error_birthday'] = '';
+
+      #get post data when set
+      if($user != null && isset($_POST['edit'])){
+         $_validate_user['password']    = $_POST['password'];
+         $_validate_user['password2']   = $_POST['password2'];
+         $_validate_user['email']       = $_POST['email'];
+         $_validate_user['difficulty']  = $_POST['difficulty'];
+         $_validate_user['place']       = $_POST['place'];
+         $_validate_user['birthday']    = $_POST['birthday'];
+         $_validate_user['gender']      = $_POST['gender'];
+         $_validate_user['aboutMe']     = $_POST['aboutMe'];
+      }
+      
+      if($_validate_user != null){
+         $this->load->library('InputValidate');
+
+         #validate email
+         $this->LibInputValidate->add('email', $_validate_user['email'], 'email', 'empty= false');
+
+         #validate difficulty
+         if(!in_array($_validate_user['difficulty'], array('Easy','Medium','Hard'))) {
+            $_editSuccessful = false;
+            $data['error_form'] = "Invalid difficulty is given!";
+         }
+
+         #validate place when set
+         if($user['place'] != $_validate_user['place'])
+            $this->LibInputValidate->add('place', $_validate_user['place'], 'alphabet');
+
+         #validate birthday when set
+         #echo checkdate($_validate_user['birthday']);
+
+         #validate gender when set
+         if(!in_array($_validate_user['gender'], array('m','w'))){
+            $_editSuccessful = false;
+            $data['error_form'] = "Invalid gender is given!";
+         }
+
+         #validate aboutme when set
+         $_validate_user['aboutMe'] = htmlentities($_validate_user['aboutMe']);
+
+         #validate password when set
+         if(!empty($_validate_user['password'])){
+            if($_validate_user['password'] != $_validate_user['password2']){
+                $_editSuccessful = false;
+               $data['error_password'] = "Passwords doesn't match!";
+            }else{
+
+            }
+         }
+
+         #validate image
+
+         #check errors;
+         $errors = $this->LibInputValidate->validate();
+         if( !empty($errors) ){
+            $_editSuccessful = false;
+            foreach ($errors as $input => $input_errors) {
+                foreach ($input_errors as $error) {
+                        $data['error_'.$input] .= $error."<br/>";
+                }
+            }
+         }
+         $user = $_validate_user;
+      }
+      $data['user'] = $user;
+      if($this->uri->segment(3) == 'json')
+         echo json_encode($data);
+      else
+         $this->load->view('userEdit', $data);
+   }
 }        
