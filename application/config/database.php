@@ -11,10 +11,10 @@
 $host = 'localhost';
 
 /* The username used to connect to MYSQL */
-$user = 'root';
+$user = 'indysix';
 
 /* The password used to connec to MYSQL */
-$password = '';
+$password = 'indysix';
 
 /* The name of the database you want to connect to */
 $database = 'indysix_2';
