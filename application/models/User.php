@@ -37,9 +37,9 @@ class Model_User extends Core_Model  {
 						,'registrationDate'
 						,'avatar'
 						,'difficulty'
-						,'woonplaats'
-						,'geboortedatum'
-						,'geslaccht'
+						,'place'
+						,'birthday'
+						,'gender'
 						,'aboutMe'
 					 );
 		$update = array();

@@ -1,5 +1,8 @@
 
 <h1><?PHP echo $username ?></h1>
+<?PHP if($owner): ?>
+	<a href="<?PHP echo baseUrl('user/edit') ?>">Edit</a><br>
+<?PHP endif; ?> 
 
 <img src="<?PHP echo $avatarUrl ?>">
 

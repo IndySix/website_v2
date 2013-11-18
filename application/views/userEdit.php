@@ -1,11 +1,16 @@
 <h1>Edit Profile</h1>
 
 <form method="post" enctype="multipart/form-data" action="<?PHP echo baseUrl('user/edit') ?>">
-	<p id="error_form"><?PHP echo $error_form ?></p>
+	
 
 	<img src="<?PHP echo baseUrl('data/avatars/'.$user['avatar'] ) ?>" width="70px">
-	<input id="avatar" type="file" name="avatar"><br>
+	<input id="avatar" type="file" name="avatar">
+	<input type="submit" name="upload" value="upload"><br>
+	<p id="error_avatar"><?PHP echo $error_avatar ?></p><br>
+</form>
 
+<form method="post" action="<?PHP echo baseUrl('user/edit') ?>">
+	<p id="error_form"><?PHP echo $error_form ?></p>
 	<label>Email</label>
 	<input id="email" type="text" name="email" value="<?PHP echo $user['email'] ?>" /></br>
 	<p id="error_email"><?PHP echo $error_email ?></p>

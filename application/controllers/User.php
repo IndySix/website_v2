@@ -168,9 +168,17 @@ class Controller_User extends Core_Controller {
       $this->ModelLogin->checkLogin();
       
       $this->load->model('User');
+      $this->load->library('Upload');
+
+      $this->LibUpload->setIsImage(true);
+      $this->LibUpload->setMaximumWidth(120);
+      $this->LibUpload->setMaximumHeight(120);
+      $this->LibUpload->setValidExtensions("jpg|jpeg|png");
+      $this->LibUpload->setUploadDirectory('data/avatars');
+
       $user = $this->ModelUser->byId( $this->LibSession->get('user_id') );
       $_validate_user      = null;
-      $_editSuccessful     = false;
+      $_editSuccessful     = true;
       $data['password']    = '';
       $data['password2']   = '';
       $data['email']       = '';
@@ -181,13 +189,50 @@ class Controller_User extends Core_Controller {
       $data['aboutMe']     = '';
 
       $data['error_form']     = '';
+      $data['error_avatar']   = '';
       $data['error_password'] = '';
       $data['error_email']    = '';
       $data['error_place']    = '';
       $data['error_birthday'] = '';
 
-      #get post data when set
+      #upload avater when set
+      if( $user != null && isset($_POST['upload']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK){
+         $this->load->library('Upload');
+
+         $this->LibUpload->setIsImage(true);
+         $this->LibUpload->setMaximumWidth(120);
+         $this->LibUpload->setMaximumHeight(120);
+         $this->LibUpload->setValidExtensions("jpg|jpeg|png");
+         $this->LibUpload->setUploadDirectory('data/avatars');
+
+         #change file name to random
+         $x = explode('.', $_FILES['avatar']['name']);
+         $extension = strtolower( $x[count($x) - 1] );
+         $_FILES['avatar']['name'] = randomString(16).'.'.$extension;
+         
+         $this->LibUpload->loadFile( $_FILES['avatar'] );
+         if($this->LibUpload->uploadFile()){
+            #remove old avatar
+            if($user['avatar'] != 'noavatar.jpg'){
+               unlink(__SITE_PATH.'data/avatars/'.$user['avatar']);
+            }
+
+            #save upload to user
+            $avatar['id'] = $user['id'];
+            $avatar['avatar'] = $this->LibUpload->getFileName();
+            $user['avatar'] = $avatar['avatar'];
+            $this->ModelUser->save($avatar);
+            $this->ModelLogin->updateUserSession();
+         } else {
+            foreach ($this->LibUpload->getErrors() as $error) {
+               $data['error_avatar'] .= $error."<br>";
+            }
+         }
+      } 
+
+      #get edit post data when set
       if($user != null && isset($_POST['edit'])){
+         $_validate_user                = $user;
          $_validate_user['password']    = $_POST['password'];
          $_validate_user['password2']   = $_POST['password2'];
          $_validate_user['email']       = $_POST['email'];
@@ -215,7 +260,13 @@ class Controller_User extends Core_Controller {
             $this->LibInputValidate->add('place', $_validate_user['place'], 'alphabet');
 
          #validate birthday when set
-         #echo checkdate($_validate_user['birthday']);
+         if(!empty($_validate_user['birthday'])){
+            $d = DateTime::createFromFormat("Y-m-d", $_validate_user['birthday']);
+            if ( !($d && $d->format("Y-m-d") == $_validate_user['birthday']) ) {
+               $_editSuccessful = false;
+               $data['error_form'] = 'Invalid birthday is given!';
+            }
+         }
 
          #validate gender when set
          if(!in_array($_validate_user['gender'], array('m','w'))){
@@ -223,7 +274,7 @@ class Controller_User extends Core_Controller {
             $data['error_form'] = "Invalid gender is given!";
          }
 
-         #validate aboutme when set
+         #validate aboutme
          $_validate_user['aboutMe'] = htmlentities($_validate_user['aboutMe']);
 
          #validate password when set
@@ -232,11 +283,9 @@ class Controller_User extends Core_Controller {
                 $_editSuccessful = false;
                $data['error_password'] = "Passwords doesn't match!";
             }else{
-
+              $this->LibInputValidate->add('password', $_validate_user['password'], 'none', 'empty = false; minlength = 6');
             }
          }
-
-         #validate image
 
          #check errors;
          $errors = $this->LibInputValidate->validate();
@@ -248,8 +297,27 @@ class Controller_User extends Core_Controller {
                 }
             }
          }
+
+         #save results
+         if($_editSuccessful){
+            $this->load->library('Secure');
+            
+            if(empty($_validate_user['password']))
+               unset($user['password']);
+            else
+               $_validate_user['password'] = $this->LibSecure->hashPassword( $_validate_user['password'] );
+            
+            $this->ModelUser->save($_validate_user);
+            $this->ModelLogin->updateUserSession();
+         }
+
          $user = $_validate_user;
       }
+
+
+      #empty birhtday when default set
+      $user['birthday'] = $user['birthday'] == 0 ? '' : $user['birthday'];
+
       $data['user'] = $user;
       if($this->uri->segment(3) == 'json')
          echo json_encode($data);

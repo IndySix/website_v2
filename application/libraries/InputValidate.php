@@ -202,7 +202,7 @@ class Library_InputValidate {
     */
     private function prop_minlength($property, $value){
         if(is_numeric($property) && strlen($value) < $property )
-            return str_replace('[property]', 'Must be longer than [property] characters!');
+            return str_replace('[property]', $property,'Must be longer than [property] characters!');
         return false;
     }
 
@@ -219,7 +219,7 @@ class Library_InputValidate {
     */
     private function prop_maxlength($property, $value){
         if(is_numeric($property) && strlen($value) > $property )
-            return str_replace('[property]', 'Should not be longer than [property] characters!');
+            return str_replace('[property]', $property,'Should not be longer than [property] characters!');
         return false;
     }
 }
