@@ -360,6 +360,7 @@ class Controller_User extends Core_Controller {
 
    public function search(){
       $this->load->model('User');
+      $data["user_id"] = $this->LibSession->get('user_id');
       $data['search'] = '';
    
       if(isset($_GET['search']))

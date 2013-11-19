@@ -32,7 +32,7 @@ class Model_User extends Core_Model  {
 	}
 
 	public function getFriendRequests($user_id){
-		$sql = 'SELECT * FROM Friends WHERE friend_id = ? AND request = 1';
+		$sql = 'SELECT user_id as id, username, avatar FROM Friends, Users WHERE Friends.user_id = Users.id AND friend_id = ? AND request = 1';
 		$bind[] = $user_id;
 		return $this->db->query($sql, $bind);
 	}

@@ -11,7 +11,9 @@
 			<img src="<?PHP echo baseUrl('data/avatars/'.$user['avatar']) ?>" width="60px">
 			<?PHP echo $user['username'] ?>
 	</a>
+  <?PHP if( $user_id != $user['id'] ): ?>
     <a class="friend-button friend-request" href="#" data-id="<?PHP echo $user['id'] ?>" >Add friend</a>
+    <?PHP endif; ?>
   </p>
 <?PHP endforeach; ?>
 </div>

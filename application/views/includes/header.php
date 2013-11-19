@@ -21,8 +21,17 @@
 		<a href="<?PHP echo baseUrl('user') ?>"><?PHP echo $this->LibSession->get('user_username') ?></a>
 		<a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
 		<hr>
-
-		<a href="<?PHP echo baseUrl('Home') ?>">Home</a>
+		<u style="list-style: none outside none;">
+			<li style="float: left; padding: 10px;"><a href="<?PHP echo baseUrl('Home') ?>">Home</a></li>
+			<li style="float: left; padding: 10px;"><a href="<?PHP echo baseUrl('user/search') ?>">Search user</a></li>
+			<li style="float: left; padding: 10px;">
+				<a id="friend-requests-button" href="javascript:void(0);">request</a>
+				<div id="friend-requests" style="position: absolute; display: none; background-color: #fff; padding: 10px;">
+					Maikel accept decline
+				</div>
+			</li>
+		</u>
+		
 	<?PHP else: ?>
 		<a href="<?PHP echo baseUrl('user/login') ?>">Login</a>
 		<a href="<?PHP echo baseUrl('user/register') ?>">Register</a>
