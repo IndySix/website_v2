@@ -84,7 +84,7 @@ class Controller_User extends Core_Controller {
    }
 
    function register(){
-      $_registerSuccessful = false;
+      $_registerSuccessful = true;
    	$data['username'] = '';
       $data['password'] = '';
       $data['email']    = '';
@@ -93,29 +93,40 @@ class Controller_User extends Core_Controller {
       $data['error_email']    = '';
 
       if(isset($_POST['register'])){
-         $this->load->model('Validate');
+         $this->load->library('InputValidate');
+         $this->load->model('User');
          $data['username'] = $_POST['username'];
          $data['password'] = $_POST['password'];
          $data['email']    = $_POST['email'];
 
          #validate username
-         if( !$this->ModelValidate->username($data['username']) )
-            $data['error_username'] = $this->ModelValidate->getErrors();
+         $user = $this->ModelUser->byUsername($data['username']);
+         if($user == null) {
+            $this->LibInputValidate->add('username', $data['username'], 'alphanumeric', 'empty= false');
+         } else {
+            $_registerSuccessful = false;
+            $data['error_username'] = "Username already used!";
+         }
 
          #validate password
-         if( !$this->ModelValidate->password($data['password']) )
-            $data['error_password'] = $this->ModelValidate->getErrors();
+         $this->LibInputValidate->add('password', $data['password'], 'none', 'empty = false; minlength = 6');
 
          #validate email
-         if( !$this->ModelValidate->email($data['email']) )
-            $data['error_email'] = $this->ModelValidate->getErrors();
+         $user = $this->ModelUser->byEmail($data['email']);
+         if($user == null) {
+            $this->LibInputValidate->add('email', $data['email'], 'email', 'empty= false');
+         } else {
+            $_registerSuccessful = false;
+            $data['error_email'] = "Email already used!";
+         }
 
-         if ( empty($data['error_username']) && empty($data['error_password']) && empty($data['error_email']) ) {
+         #get errors
+         $errors = $this->LibInputValidate->validate();
+
+         if ( $_registerSuccessful && empty($errors) ) {
             $this->load->library('Secure');
             $this->load->model('Tokens');
             $this->load->model('Mail');
-            
-            $_registerSuccessful = true;
             
             #save user
             $bind['username'] = $data['username'];
@@ -129,7 +140,17 @@ class Controller_User extends Core_Controller {
             #send validate email
             $token = $this->ModelTokens->create($this->LibSession->get('user_id'), 'mail');
             $this->ModelMail->register($data['email'], $data['username'], $token);
+         } else {
+
+            $_registerSuccessful = false;
+            foreach ($errors as $input => $input_errors) {
+                foreach ($input_errors as $error) {
+                        $data['error_'.$input] .= $error."<br/>";
+                }
+            }
          }
+      } else {
+         $_registerSuccessful = false;
       }
 
       if($this->uri->segment(3) == 'json')
@@ -196,7 +217,8 @@ class Controller_User extends Core_Controller {
       $data['error_birthday'] = '';
 
       #upload avater when set
-      if( $user != null && isset($_POST['upload']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK){
+      if( $user != null && isset($_POST['upload'])){
+         
          $this->load->library('Upload');
 
          $this->LibUpload->setIsImage(true);
@@ -247,7 +269,16 @@ class Controller_User extends Core_Controller {
          $this->load->library('InputValidate');
 
          #validate email
-         $this->LibInputValidate->add('email', $_validate_user['email'], 'email', 'empty= false');
+         if($_validate_user['email'] != $user['email']){
+            $_validate_user['validEmail'] = false;
+            $user = $this->ModelUser->byEmail($_validate_user['email']);
+            if($user == null) {
+               $this->LibInputValidate->add('email', $_validate_user['email'], 'email', 'empty= false');
+            } else {
+               $_editSuccessful = false;
+               $data['error_email'] = "Email already used!";
+            }
+         }
 
          #validate difficulty
          if(!in_array($_validate_user['difficulty'], array('Easy','Medium','Hard'))) {
@@ -303,7 +334,7 @@ class Controller_User extends Core_Controller {
             $this->load->library('Secure');
             
             if(empty($_validate_user['password']))
-               unset($user['password']);
+               unset($_validate_user['password']);
             else
                $_validate_user['password'] = $this->LibSecure->hashPassword( $_validate_user['password'] );
             

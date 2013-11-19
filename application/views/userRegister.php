@@ -34,7 +34,7 @@ jQuery( "#register-form" ).submit(function( event ) {
 				validForm = false;
 				jQuery("#error_username").html(resp.error_username)
 			}
-			if(resp.error_username != ""){
+			if(resp.error_password != ""){
 				validForm = false;
 				jQuery("#error_password").html(resp.error_password)
 			}
