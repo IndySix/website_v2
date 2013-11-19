@@ -27,17 +27,18 @@ function checkFriendRequests(){
 		};
 
 		jQuery('#friend-requests').html(html);
+		jQuery('#friend-requests-button').html('request '+counter);
 	});
 }
 
 function acceptFriendRequest(id){
 	jQuery.get( base_url+"friend/accept/"+id, function( data ) {});
-	jQuery('#friend-reguest-'+id).remove();
+	jQuery('#friend-reguest-'+id).stop().slideUp(200);
 }
 
 function acceptFriendRequest(id){
 	jQuery.get( base_url+"friend/refuse/"+id, function( data ) {});
-	jQuery('#friend-reguest-'+id).remove();
+	jQuery('#friend-reguest-'+id).stop().slideUp(200);
 }
 
 
@@ -88,6 +89,6 @@ jQuery(function() {
         jQuery("#friend-requests").stop().slideToggle(200);
     });
 
-    checkFriendRequests();
+    setInterval(function(){checkFriendRequests();},30000);
 });
 

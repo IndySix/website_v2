@@ -27,7 +27,6 @@
 			<li style="float: left; padding: 10px;">
 				<a id="friend-requests-button" href="javascript:void(0);">request</a>
 				<div id="friend-requests" style="position: absolute; display: none; background-color: #fff; padding: 10px;">
-					Maikel accept decline
 				</div>
 			</li>
 		</u>
