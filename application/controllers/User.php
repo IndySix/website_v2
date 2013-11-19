@@ -355,4 +355,20 @@ class Controller_User extends Core_Controller {
       else
          $this->load->view('userEdit', $data);
    }
+
+   public function search(){
+      $this->load->model('User');
+      $data['search'] = '';
+   
+      if(isset($_GET['search']))
+         $data['search'] = $_GET['search'];
+
+      $data['users'] = $this->ModelUser->searchByUsername($data['search']);
+      
+      if($this->uri->segment(3) == 'json')
+         echo json_encode($data);
+      else
+         $this->load->view('userSearch', $data);
+
+   }
 }        

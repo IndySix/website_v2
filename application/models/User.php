@@ -24,6 +24,20 @@ class Model_User extends Core_Model  {
 		return $this->returnUser($result);
 	}
 
+	public function searchByUsername($username){
+		$sql = 'SELECT id, username, avatar  FROM Users WHERE username like ?
+				ORDER BY CASE WHEN username like ? THEN 0
+               	WHEN username like ? THEN 1
+               	WHEN username like ? THEN 2
+               	ELSE 3
+          		END, username';
+        $bind[] = '%'.$username.'%';
+        $bind[] = $username.' %';
+        $bind[] = $username.'%';
+        $bind[] = '%'.$username;
+        return $this->db->query($sql, $bind);
+	}
+
 	public function save($user){
 		if(!isset($user['id']))
 			return false;
