@@ -11,16 +11,12 @@
 <body>
 <div id="container">
 	<?PHP if ($this->ModelLogin->isLoggedin()): ?>
-		<a href="<?PHP echo baseUrl('user') ?>">
-			<img src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="60px">
-		</a>
+		<a href="<?PHP echo baseUrl('user') ?>"><img src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="60px"></a>
 		<a href="<?PHP echo baseUrl('user') ?>"><?PHP echo $this->LibSession->get('user_username') ?></a>
-		<a href="<?PHP echo baseUrl('level/') ?>">Levels</a>
-
 		<a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
 		<hr>
-
 		<a href="<?PHP echo baseUrl('Home') ?>">Home</a>
+		<a href="<?PHP echo baseUrl('level/') ?>">Levels</a>
 	<?PHP else: ?>
 		<a href="<?PHP echo baseUrl('user/login') ?>">Login</a>
 		<a href="<?PHP echo baseUrl('user/register') ?>">Register</a>
