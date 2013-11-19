@@ -5,12 +5,14 @@
 <hr>
 <div id="search-results">
 <?PHP foreach($users as $user): ?>
+<p>
 	<a href="<?PHP echo baseUrl('user/view/'.$user['id'].'/'.$user['username']) ?>">
-		<p>
+		
 			<img src="<?PHP echo baseUrl('data/avatars/'.$user['avatar']) ?>" width="60px">
 			<?PHP echo $user['username'] ?>
-		</p>
 	</a>
+    <a class="friend-button friend-request" href="#" data-id="<?PHP echo $user['id'] ?>" >Add friend</a>
+  </p>
 <?PHP endforeach; ?>
 </div>
 
@@ -31,10 +33,10 @@
        			resp = JSON.parse(msg);
        			for (var i = 0; i < resp.users.length; i++) {
        				var html = jQuery('#search-results').html(); 
-       				html += "<a href='<?PHP echo baseUrl('user/view/') ?>"+resp.users[i]['id']+"'> <p>";
+       				html += " <p><a href='<?PHP echo baseUrl('user/view/') ?>"+resp.users[i]['id']+"'>";
        				html += "<img src='<?PHP echo baseUrl('data/avatars/') ?>"+resp.users[i]['avatar']+"' width='60px'> ";
        				html += resp.users[i]['username']
-       				html += "</p></a>";
+       				html += "</a></p>";
        				jQuery('#search-results').html(html);
        			};
        			

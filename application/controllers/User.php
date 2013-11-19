@@ -10,16 +10,18 @@ class Controller_User extends Core_Controller {
       $this->ModelLogin->checkLogin();
    	
       $this->load->model('User');
-      $data['owner'] = false;
 
       $user_id = $this->uri->segment(3);
       if($user_id == null || !is_numeric($user_id))
          $user_id = $this->LibSession->get('user_id');
 
       $user = $this->ModelUser->byId($user_id);
+      $user_loggedin_id = $this->LibSession->get('user_id');
 
       if(!empty($user)){
-         $data['owner'] = $this->LibSession->get('user_id') == $user_id ? true : false;
+         $data['owner'] = $user_loggedin_id == $user_id ? true : false;
+         $data['isFriend'] = $this->ModelUser->isFriend($user_loggedin_id, $user_id);
+         $data['isConnection'] = $this->ModelUser->isConnection($user_loggedin_id, $user_id);
          $data['user_id']  = $user['id'];
          $data['username'] = $user['username'];
          $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
@@ -369,6 +371,5 @@ class Controller_User extends Core_Controller {
          echo json_encode($data);
       else
          $this->load->view('userSearch', $data);
-
    }
 }        
