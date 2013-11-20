@@ -16,7 +16,7 @@ class Controller_Friend extends Core_Controller {
 		$connection = $this->ModelUser->getFriendConnection($user_id, $friend_id);
 		if( $connection != null && $connection['accepted'] == 1 ){
 			$data['status'] = 'friend';
-		} elseif($connection != null) {
+		} elseif($connection != null && $connection['user_id'] == $user_id) {
 			$data['status'] = 'request_send';
 		}
 
@@ -25,6 +25,7 @@ class Controller_Friend extends Core_Controller {
 
 	public function request(){
 		$this->load->model('User');
+		$data['status'] = 'request';
 		
 		$user_id = $this->LibSession->get('user_id');
 		$friend_id = $this->uri->segment(3);
@@ -34,13 +35,29 @@ class Controller_Friend extends Core_Controller {
 			return;
 
 		#check if users already connected
-		if( $this->ModelUser->isConnection($user_id, $friend_id) )
-			return;
+		$connection = $this->ModelUser->getFriendConnection($user_id, $friend_id);
+		$data['user_id'] =$user_id;
+		$data['friend_id'] = $friend_id;
+		$data['connection'] = $connection;
+		if( $connection == null  ){
+			#create friend connection
+			$data['status'] = 'request_send'; 
+			$insert['user_id'] = $user_id;
+			$insert['friend_id'] = $friend_id;
+			$this->db->insert('Friends', $insert);
+		} elseif($connection['accepted'] == 1){
+			$data['status'] = 'friend';	
+		} elseif($connection['user_id'] == $friend_id){
+			#Accept friend request
+			$data['status'] = 'friend';
+			$this->db->where('id', $connection['id']);
+			$update['request'] = 0;
+			$update['accepted'] = 1;
+			$update['friendSince'] = timestampToDatetime(time());
+			$this->db->update('Friends', $update);
+		}
 
-		#create friend connection 
-		$insert['user_id'] = $user_id;
-		$insert['friend_id'] = $friend_id;
-		$this->db->insert('Friends', $insert); 
+		echo json_encode($data);
    	}
 
    	public function delete(){
@@ -54,7 +71,7 @@ class Controller_Friend extends Core_Controller {
 			return;
 
 		$this->db->where('id', $connection['id']);
-		$this->db->delete('Friends');
+		//$this->db->delete('Friends');
    	}
 
    	public function accept(){
