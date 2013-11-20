@@ -145,7 +145,10 @@ class Library_Session {
         $serdate = serialize($this->data);
         /* Open file and write serialized array to file  */
         $fh = fopen($file, 'w') or die("can't open file");
-        fwrite($fh, $serdate);
+        if( flock( $fh, LOCK_EX ) ) {
+            fwrite($fh, $serdate);
+            flock( $fh, LOCK_UN );
+        }
         fclose($fh);
     }
 
@@ -162,9 +165,7 @@ class Library_Session {
         /* Check file is readable */
         if (is_readable($file)) {
             /* open file and fet serialized array */
-            $fh = fopen($file, 'r');
-            $theData = fread($fh, filesize($file));
-            fclose($fh);
+            $theData = file_get_contents($file);
             
             /* unserialize array and check if sessionID and userAgent match*/
             $data = unserialize($theData);
