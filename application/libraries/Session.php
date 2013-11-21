@@ -45,12 +45,6 @@ if (!defined('__SITE_PATH')) exit('No direct script access allowed');
 // ------------------------------------------------------------------------
 
 class Library_Session {
-    /* @var array contains data of session. */
-    private $data = array();
-
-    /* @var String contains the save location of the sessions. */
-    private $saveLocation;
-
     /**
      * Constructer
      *
@@ -62,143 +56,7 @@ class Library_Session {
      * @return	void
      */
     function __construct() {
-        /* Set and validate sessions save location */
-        $this->setSaveLocatione();
-        /* Save user agent for validating session */
-        $this->data['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
-
-        /* Check if cookie is set and set sessionID */
-        if (isset($_COOKIE['sessionID'])) {
-            $this->data['sessionID'] = $_COOKIE['sessionID'];
-
-            /* When session loads fails create new sessionID */
-            if (!$this->load()) {
-                $this->data['sessionID'] = randomString(16);
-            }
-        } else {
-            $this->data['sessionID'] = randomString(16);
-        }
-
-        /* Save session and create new cookie */
-        $this->setCookie('sessionID', $this->data['sessionID']);
-        $this->save();
-
-        /* Clean Sessions older then 1 hour */
-        $this->clean();
-    }
-
-    /**
-     * setSaveLocation
-     *
-     * Set the save location for the sessions from the config file.
-     *
-     * @access	private
-     * @return	void
-     */
-    private function setSaveLocatione() {
-        include __CONFIG_PATH . 'config.php';
-        $saveLocation = realpath($sessionSaveLocation) . '/';
-        if (is_dir($saveLocation)) {
-            $this->saveLocation = $saveLocation;
-        } else {
-            throw new Exception('The sessions save location is not a valid directory!');
-        }
-    }
-
-    /**
-     * setCookie
-     *
-     * Creates a new cookie
-     *
-     * @access	private
-     * @param	String    name of cookie
-     * @param	String    value of cookie
-     * @param	int       expire tim in seconds
-     * @return	void
-     */
-    private function setCookie($name, $value, $expire = 3600) {
-        $expire = time() + $expire;
-
-        /* Get domain */
-        $domain = $_SERVER['SERVER_NAME'];
-        /* get if http or https is used */
-        if (isset($_SERVER['HTTPS'])) {
-            $secure = true;
-        } else {
-            $secure = false;
-        }
-        /* Create cookie */
-        setcookie($name, $value, $expire, "/", $domain, $secure, true);
-    }
-
-    /**
-     * save
-     *
-     * Saves session to file
-     *
-     * @access	private
-     * @return	void
-     */
-    private function save() {
-        $file = $this->saveLocation . $this->data['sessionID'];
-        /* Serialize data array */
-        $serdate = serialize($this->data);
-        /* Open file and write serialized array to file  */
-        $fh = fopen($file, 'w') or die("can't open file");
-        if( flock( $fh, LOCK_EX ) ) {
-            fwrite($fh, $serdate);
-            flock( $fh, LOCK_UN );
-        }
-        fclose($fh);
-    }
-
-    /**
-     * load
-     *
-     * load session data
-     *
-     * @access	private
-     * @return	boolean
-     */
-    private function load() {
-        $file = $this->saveLocation . $this->data['sessionID'];
-        /* Check file is readable */
-        if (is_readable($file)) {
-            /* open file and fet serialized array */
-            $theData = file_get_contents($file);
-            
-            /* unserialize array and check if sessionID and userAgent match*/
-            $data = unserialize($theData);
-            if ($data['sessionID'] == $this->data['sessionID']
-                    && $data['userAgent'] == $this->data['userAgent']) {
-                $this->data = $data;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * clean
-     *
-     * Clean Sessions older then 1 hour.
-     *
-     * @access	private
-     * @return	void
-     */
-    private function clean() {
-        foreach (scandir($this->saveLocation) as $file) {
-            /* skip files '.', '..' and '.htaccess' */
-            if ($file == '.' || $file == '..' || $file == '.htaccess') {
-                continue;
-            }
-            /* When file is modified more then one hour ago, delete file */
-            $fileLocation = $this->saveLocation . $file;
-            $filelastmodified = filemtime($fileLocation);
-            if ((time() - $filelastmodified) > 3600) {
-                unlink($fileLocation);
-            }
-        }
+        session_start();
     }
 
     /**
@@ -212,10 +70,7 @@ class Library_Session {
      * @return	void
      */
     function set($name, $value) {
-        if ($name != "userAgent" && $name != "sessionID") {
-            $this->data[$name] = $value;
-            $this->save();
-        }
+        $_SESSION[$name] = $value;
     }
     
     /**
@@ -229,15 +84,9 @@ class Library_Session {
      * @param   String  secondKey  
      * @return	void
      */
-    function get($key, $secondKey = false) {
-        if ($key != "userAgent" && $key != "sessionID" && isset($this->data[$key])) {
-            if($secondKey === false){
-                return $this->data[$key];
-            } else {
-                return $this->data[$key][$secondKey];
-            }
-            
-        }
+    function get($key) {
+        if ( isset($_SESSION[$key]) )
+            return $_SESSION[$key];
         return null;
     }
 
