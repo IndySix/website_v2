@@ -4,3 +4,5 @@
 Difficulty: <?php echo $difficulty; ?>
 <br />
 Description: <?php echo $description; ?>
+<br />
+Part: <?php echo $part['description']; ?>

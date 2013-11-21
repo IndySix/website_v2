@@ -13,7 +13,12 @@ class Controller_Level extends Core_Controller {
 
       $this->load->model('Level');
 
+      $this->load->model('LevelPart');
+
       $level_data = $this->ModelLevel->byId($level);
+
+      $level_part = $this->ModelLevelPart->byId($level_data['part']);
+
 
       if(!empty($level_data)){
          $user_name = $this->LibSession->get('user_username');
@@ -22,6 +27,8 @@ class Controller_Level extends Core_Controller {
          $data['level'] = $level_data['id'];
          $data['difficulty'] = $level_data['difficulty'];
          $data['description'] = $level_data['description'];
+
+         $data['part'] = $level_part;
 
          $this->load->view('levelView', $data);
 
@@ -36,7 +43,11 @@ class Controller_Level extends Core_Controller {
 
       $this->load->model('Level');
 
-      $levels = $this->ModelLevel->all();
+      $this->load->model('LevelPart');
+
+      $sql = 'SELECT * FROM Levels, LevelParts WHERE Levels.part = LevelParts.id';
+
+      $levels = $this->db->query($sql);
 
       if(!empty($levels)){
          $data['levels'] = $levels;
