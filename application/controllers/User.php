@@ -10,16 +10,18 @@ class Controller_User extends Core_Controller {
       $this->ModelLogin->checkLogin();
    	
       $this->load->model('User');
-      $data['owner'] = false;
 
       $user_id = $this->uri->segment(3);
       if($user_id == null || !is_numeric($user_id))
          $user_id = $this->LibSession->get('user_id');
 
       $user = $this->ModelUser->byId($user_id);
+      $user_loggedin_id = $this->LibSession->get('user_id');
 
       if(!empty($user)){
-         $data['owner'] = $this->LibSession->get('user_id') == $user_id ? true : false;
+         $data['owner'] = $user_loggedin_id == $user_id ? true : false;
+         $data['isFriend'] = $this->ModelUser->isFriend($user_loggedin_id, $user_id);
+         $data['isConnection'] = $this->ModelUser->isConnection($user_loggedin_id, $user_id);
          $data['user_id']  = $user['id'];
          $data['username'] = $user['username'];
          $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
@@ -84,7 +86,7 @@ class Controller_User extends Core_Controller {
    }
 
    function register(){
-      $_registerSuccessful = false;
+      $_registerSuccessful = true;
    	$data['username'] = '';
       $data['password'] = '';
       $data['email']    = '';
@@ -93,29 +95,40 @@ class Controller_User extends Core_Controller {
       $data['error_email']    = '';
 
       if(isset($_POST['register'])){
-         $this->load->model('Validate');
+         $this->load->library('InputValidate');
+         $this->load->model('User');
          $data['username'] = $_POST['username'];
          $data['password'] = $_POST['password'];
          $data['email']    = $_POST['email'];
 
          #validate username
-         if( !$this->ModelValidate->username($data['username']) )
-            $data['error_username'] = $this->ModelValidate->getErrors();
+         $user = $this->ModelUser->byUsername($data['username']);
+         if($user == null) {
+            $this->LibInputValidate->add('username', $data['username'], 'alphanumeric', 'empty= false');
+         } else {
+            $_registerSuccessful = false;
+            $data['error_username'] = "Username already used!";
+         }
 
          #validate password
-         if( !$this->ModelValidate->password($data['password']) )
-            $data['error_password'] = $this->ModelValidate->getErrors();
+         $this->LibInputValidate->add('password', $data['password'], 'none', 'empty = false; minlength = 6');
 
          #validate email
-         if( !$this->ModelValidate->email($data['email']) )
-            $data['error_email'] = $this->ModelValidate->getErrors();
+         $user = $this->ModelUser->byEmail($data['email']);
+         if($user == null) {
+            $this->LibInputValidate->add('email', $data['email'], 'email', 'empty= false');
+         } else {
+            $_registerSuccessful = false;
+            $data['error_email'] = "Email already used!";
+         }
 
-         if ( empty($data['error_username']) && empty($data['error_password']) && empty($data['error_email']) ) {
+         #get errors
+         $errors = $this->LibInputValidate->validate();
+
+         if ( $_registerSuccessful && empty($errors) ) {
             $this->load->library('Secure');
             $this->load->model('Tokens');
             $this->load->model('Mail');
-            
-            $_registerSuccessful = true;
             
             #save user
             $bind['username'] = $data['username'];
@@ -129,7 +142,17 @@ class Controller_User extends Core_Controller {
             #send validate email
             $token = $this->ModelTokens->create($this->LibSession->get('user_id'), 'mail');
             $this->ModelMail->register($data['email'], $data['username'], $token);
+         } else {
+
+            $_registerSuccessful = false;
+            foreach ($errors as $input => $input_errors) {
+                foreach ($input_errors as $error) {
+                        $data['error_'.$input] .= $error."<br/>";
+                }
+            }
          }
+      } else {
+         $_registerSuccessful = false;
       }
 
       if($this->uri->segment(3) == 'json')
@@ -162,5 +185,192 @@ class Controller_User extends Core_Controller {
          $data['error'] = 'No valid token is given!';
       }
       $this->load->view('message', $data); 
+   }
+
+   function edit(){
+      $this->ModelLogin->checkLogin();
+      
+      $this->load->model('User');
+      $this->load->library('Upload');
+
+      $this->LibUpload->setIsImage(true);
+      $this->LibUpload->setMaximumWidth(120);
+      $this->LibUpload->setMaximumHeight(120);
+      $this->LibUpload->setValidExtensions("jpg|jpeg|png");
+      $this->LibUpload->setUploadDirectory('data/avatars');
+
+      $user = $this->ModelUser->byId( $this->LibSession->get('user_id') );
+      $_validate_user      = null;
+      $_editSuccessful     = true;
+      $data['password']    = '';
+      $data['password2']   = '';
+      $data['email']       = '';
+      $data['difficulty']  = '';
+      $data['place']       = '';
+      $data['birthday']    = '';
+      $data['gender']      = '';
+      $data['aboutMe']     = '';
+
+      $data['error_form']     = '';
+      $data['error_avatar']   = '';
+      $data['error_password'] = '';
+      $data['error_email']    = '';
+      $data['error_place']    = '';
+      $data['error_birthday'] = '';
+
+      #upload avater when set
+      if( $user != null && isset($_POST['upload'])){
+         
+         $this->load->library('Upload');
+
+         $this->LibUpload->setIsImage(true);
+         $this->LibUpload->setMaximumWidth(120);
+         $this->LibUpload->setMaximumHeight(120);
+         $this->LibUpload->setValidExtensions("jpg|jpeg|png");
+         $this->LibUpload->setUploadDirectory('data/avatars');
+
+         #change file name to random
+         $x = explode('.', $_FILES['avatar']['name']);
+         $extension = strtolower( $x[count($x) - 1] );
+         $_FILES['avatar']['name'] = randomString(16).'.'.$extension;
+         
+         $this->LibUpload->loadFile( $_FILES['avatar'] );
+         if($this->LibUpload->uploadFile()){
+            #remove old avatar
+            if($user['avatar'] != 'noavatar.jpg'){
+               unlink(__SITE_PATH.'data/avatars/'.$user['avatar']);
+            }
+
+            #save upload to user
+            $avatar['id'] = $user['id'];
+            $avatar['avatar'] = $this->LibUpload->getFileName();
+            $user['avatar'] = $avatar['avatar'];
+            $this->ModelUser->save($avatar);
+            $this->ModelLogin->updateUserSession();
+         } else {
+            foreach ($this->LibUpload->getErrors() as $error) {
+               $data['error_avatar'] .= $error."<br>";
+            }
+         }
+      } 
+
+      #get edit post data when set
+      if($user != null && isset($_POST['edit'])){
+         $_validate_user                = $user;
+         $_validate_user['password']    = $_POST['password'];
+         $_validate_user['password2']   = $_POST['password2'];
+         $_validate_user['email']       = $_POST['email'];
+         $_validate_user['difficulty']  = $_POST['difficulty'];
+         $_validate_user['place']       = $_POST['place'];
+         $_validate_user['birthday']    = $_POST['birthday'];
+         $_validate_user['gender']      = $_POST['gender'];
+         $_validate_user['aboutMe']     = $_POST['aboutMe'];
+      }
+      
+      if($_validate_user != null){
+         $this->load->library('InputValidate');
+
+         #validate email
+         if($_validate_user['email'] != $user['email']){
+            $_validate_user['validEmail'] = false;
+            $user = $this->ModelUser->byEmail($_validate_user['email']);
+            if($user == null) {
+               $this->LibInputValidate->add('email', $_validate_user['email'], 'email', 'empty= false');
+            } else {
+               $_editSuccessful = false;
+               $data['error_email'] = "Email already used!";
+            }
+         }
+
+         #validate difficulty
+         if(!in_array($_validate_user['difficulty'], array('Easy','Medium','Hard'))) {
+            $_editSuccessful = false;
+            $data['error_form'] = "Invalid difficulty is given!";
+         }
+
+         #validate place when set
+         if($user['place'] != $_validate_user['place'])
+            $this->LibInputValidate->add('place', $_validate_user['place'], 'alphabet');
+
+         #validate birthday when set
+         if(!empty($_validate_user['birthday'])){
+            $d = DateTime::createFromFormat("Y-m-d", $_validate_user['birthday']);
+            if ( !($d && $d->format("Y-m-d") == $_validate_user['birthday']) ) {
+               $_editSuccessful = false;
+               $data['error_form'] = 'Invalid birthday is given!';
+            }
+         }
+
+         #validate gender when set
+         if(!in_array($_validate_user['gender'], array('m','w'))){
+            $_editSuccessful = false;
+            $data['error_form'] = "Invalid gender is given!";
+         }
+
+         #validate aboutme
+         $_validate_user['aboutMe'] = htmlentities($_validate_user['aboutMe']);
+
+         #validate password when set
+         if(!empty($_validate_user['password'])){
+            if($_validate_user['password'] != $_validate_user['password2']){
+                $_editSuccessful = false;
+               $data['error_password'] = "Passwords doesn't match!";
+            }else{
+              $this->LibInputValidate->add('password', $_validate_user['password'], 'none', 'empty = false; minlength = 6');
+            }
+         }
+
+         #check errors;
+         $errors = $this->LibInputValidate->validate();
+         if( !empty($errors) ){
+            $_editSuccessful = false;
+            foreach ($errors as $input => $input_errors) {
+                foreach ($input_errors as $error) {
+                        $data['error_'.$input] .= $error."<br/>";
+                }
+            }
+         }
+
+         #save results
+         if($_editSuccessful){
+            $this->load->library('Secure');
+            
+            if(empty($_validate_user['password']))
+               unset($_validate_user['password']);
+            else
+               $_validate_user['password'] = $this->LibSecure->hashPassword( $_validate_user['password'] );
+            
+            $this->ModelUser->save($_validate_user);
+            $this->ModelLogin->updateUserSession();
+         }
+
+         $user = $_validate_user;
+      }
+
+
+      #empty birhtday when default set
+      $user['birthday'] = $user['birthday'] == 0 ? '' : $user['birthday'];
+
+      $data['user'] = $user;
+      if($this->uri->segment(3) == 'json')
+         echo json_encode($data);
+      else
+         $this->load->view('userEdit', $data);
+   }
+
+   public function search(){
+      $this->load->model('User');
+      $data["user_id"] = $this->LibSession->get('user_id');
+      $data['search'] = '';
+   
+      if(isset($_GET['search']))
+         $data['search'] = $_GET['search'];
+
+      $data['users'] = $this->ModelUser->searchByUsername($data['search']);
+      
+      if($this->uri->segment(3) == 'json')
+         echo json_encode($data);
+      else
+         $this->load->view('userSearch', $data);
    }
 }        

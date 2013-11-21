@@ -1,2 +1,4 @@
 application/config/*
-data/
+data/avatars/
+data/sessions/
+data/uploads

@@ -2,22 +2,49 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to MartensMVC</title>
+	<title>Ramped</title>
 	
 	<script src="<?PHP echo baseUrl('data/js/jquery-1.10.2.min.js') ?>"> jQuery.noConflict(); </script>
+	<script src="<?PHP echo baseUrl('data/js/jquery-ui-1.10.3.custom.min.js') ?>"></script>
+	<script src="<?PHP echo baseUrl('data/js/main.js') ?>"></script>
 	
-	<link href="<?PHP echo baseUrl('data/css/style.css') ?>" media="all" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="<?PHP echo baseUrl('data/css/reset.css') ?>">
+	<link rel="stylesheet" type="text/css" href="<?PHP echo baseUrl('data/css/style.css') ?>">
 </head>
 <body>
-<div id="container">
+<div id="menu">
+	<div class="wrapper">
 	<?PHP if ($this->ModelLogin->isLoggedin()): ?>
-		<a href="<?PHP echo baseUrl('user') ?>"><img src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="60px"></a>
-		<a href="<?PHP echo baseUrl('user') ?>"><?PHP echo $this->LibSession->get('user_username') ?></a>
-		<a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
-		<hr>
-		<a href="<?PHP echo baseUrl('Home') ?>">Home</a>
-		<a href="<?PHP echo baseUrl('level/') ?>">Levels</a>
+	<ul>
+		<li><a href="<?PHP echo baseUrl('user') ?>">Profile</a></li>
+		<li><a href="#">Career</a></li>
+		<li><a href="#">Battles</a></li>
+		<li><a href="#">Friends</a></li>
+		<li><a href="#">Video</a></li>
+		<li><a href="#">Ranking</a></li>
+		
+	</ul>
+
+	<a href="#" class="settings">&#9096;</a>
+
+	<div class="profile">
+		<img src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="24px">
+	</div>
+
+	<div class="search">
+		<!-- <form class="searchform" method="POST" action="/search">
+			<input name="search" type="text" placeholder="Search..">
+		</form> -->
+		<img src="<?PHP echo baseUrl('data/css/images/search-icon.png'); ?>" width="16px"/>
+	</div>
+
 	<?PHP else: ?>
-		<a href="<?PHP echo baseUrl('user/login') ?>">Login</a>
-		<a href="<?PHP echo baseUrl('user/register') ?>">Register</a>
+	<ul>
+		<li><a href="<?PHP echo baseUrl('user/login') ?>">Login</a></li>
+		<li><a href="<?PHP echo baseUrl('user/register') ?>">Register</a></li>
+	</ul>
 	<?PHP endif; ?>
+
+	<div class="clear"></div>
+	<div class="wrapper">
+		<div id="content">

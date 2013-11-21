@@ -1,53 +1,111 @@
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
+body{
+	background: url('./images/background.jpg');
+	background-size: cover;
+
 }
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
+.wrapper{
+	width: 80.1%;
+	margin: 0 auto;
 }
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
+#menu{
+	height: 60px;
+	width: 100%;
+	float: left;
+	background-color: #000;
 }
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
+#menu ul{
+	
+
+}
+
+#menu ul li{
+	
+
+	font-family: "Myriad Pro",Helvetica, Arial;
+	text-transform: uppercase;
+	
+}
+
+#menu ul li a{
+	padding: 23px;
+	float: left;
+	color: white;
+	text-decoration: none
+}
+#menu ul li a:hover{
+	text-decoration: underline
+}
+
+.search{
+	float: right;
+	
+	margin-top: 20px;
+	margin-right: 16px;
+}
+
+.profile{
+	float: right;
+	margin-top: 18px;
+	width: 13.2%;
+	height: 24px;
+	background-color: #333
+}
+
+.settings{
+	color: white;
+	float: right;
+	text-decoration: none;
+	margin-top: 21px;
+	margin-left: 16px;
+}
+
+.clear{
+	clear:both;
+}
+
+#content{
+	margin-top: 60px;
+	background-color: orange;
+	opacity: 0.9;
+	height:300px;
+}
+.header{
+	background-color: black;
+	margin: -4px;
+	color: white;
+	height: 36px;
+}
+.header ul li{
+	float: left;
+	
+	border-right: 1px orange solid;
+}
+.header ul li a{
+	padding: 8px 16px;
 	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
+	font-family: "Marker Felt", Helvetica, Arial;
+	font-size: 18px;
+	color: white;
+	text-decoration: none
+}
+.header ul li a:hover{
+	text-decoration: underline
 }
 
-#body{
-	margin: 0 15px 0 15px;
+#footer{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: #655353;
+	height: 46px;
+	float: left;
+	text-align: center;
+	color: #888;
+	font-family: "Myriad Pro",Helvetica, Arial;
 }
-
-p.footer{
-	text-align: right;
-	font-size: 11px;
-	border-top: 1px solid #D0D0D0;
-	line-height: 32px;
-	padding: 0 10px 0 10px;
-	margin: 20px 0 0 0;
-}
-
-#container{
-	padding: 10px;
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
+#footer p{
+	margin-top: 16px;
 }

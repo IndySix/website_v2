@@ -81,6 +81,21 @@ CREATE TABLE IF NOT EXISTS `Users` (
 INSERT INTO `Users` (`id`, `username`, `password`, `email`, `validEmail`, `level`, `blocked`, `registrationDate`, `avatar`, `difficulty`, `place`, `birthday`, `gender`, `aboutMe`) VALUES
 (25, 'krukas', 'f079eff2bd6c354e8896d713d3d9ff0fb6413165ba04f6fea38a153c0772a653c37bc5604314368f7b7c72cb89687b80c867f76ed636bbc2fe3b16a7f238c0a15dd4f273', 'test123@test.nl', 1, 0, 0, '2013-11-17 17:18:28', 'noavatar.jpg', 'Rookie', 'Utrecht', '1992-11-13', 'm', 'Somthing about me');
 
+--
+-- Table structure for table `Friends`
+--
+
+CREATE TABLE IF NOT EXISTS `Friends` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `friend_id` int(11) NOT NULL,
+  `friendSince` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `request` int(1) NOT NULL DEFAULT '1',
+  `requestDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `accepted` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

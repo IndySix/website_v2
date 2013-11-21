@@ -24,6 +24,56 @@ class Model_User extends Core_Model  {
 		return $this->returnUser($result);
 	}
 
+	public function getFriends($user_id){
+		$sql = 'SELECT * FROM Friends WHERE accepted = 1 AND (friend_id = ? OR user_id = ?)';
+		$bind[] = $user_id;
+		$bind[] = $user_id;
+		return $this->db->query($sql, $bind);
+	}
+
+	public function getFriendRequests($user_id){
+		$sql = 'SELECT user_id as id, username, avatar FROM Friends, Users WHERE Friends.user_id = Users.id AND friend_id = ? AND request = 1';
+		$bind[] = $user_id;
+		return $this->db->query($sql, $bind);
+	}
+
+	public function getFriendConnection($user_id, $friend_id){
+		$sql = 'SELECT * FROM Friends WHERE (friend_id = ? AND user_id = ?) OR (friend_id = ? AND user_id = ?)';
+		$bind[] = $friend_id;
+		$bind[] = $user_id;
+		$bind[] = $user_id;
+		$bind[] = $friend_id;
+		$result = $this->db->query($sql, $bind);
+		return $this->returnUser($result);
+	}
+
+	public function isConnection($user_id, $friend_id){
+		$con = $this->getFriendConnection($user_id, $friend_id);
+		return !empty($con);
+	}
+
+	public function isFriend($user_id, $friend_id){
+		$con = $this->getFriendConnection($user_id, $friend_id);
+		if($con != null){
+			return $con['accepted'];
+		}
+		return false;
+	}
+
+	public function searchByUsername($username){
+		$sql = 'SELECT id, username, avatar  FROM Users WHERE username like ?
+				ORDER BY CASE WHEN username like ? THEN 0
+               	WHEN username like ? THEN 1
+               	WHEN username like ? THEN 2
+               	ELSE 3
+          		END, username';
+        $bind[] = '%'.$username.'%';
+        $bind[] = $username.' %';
+        $bind[] = $username.'%';
+        $bind[] = '%'.$username;
+        return $this->db->query($sql, $bind);
+	}
+
 	public function save($user){
 		if(!isset($user['id']))
 			return false;
@@ -37,9 +87,9 @@ class Model_User extends Core_Model  {
 						,'registrationDate'
 						,'avatar'
 						,'difficulty'
-						,'woonplaats'
-						,'geboortedatum'
-						,'geslaccht'
+						,'place'
+						,'birthday'
+						,'gender'
 						,'aboutMe'
 					 );
 		$update = array();
