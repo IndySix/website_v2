@@ -9,6 +9,7 @@
 	<script src="<?PHP echo baseUrl('data/js/main.js') ?>"></script>
 	
 	<link rel="stylesheet" type="text/css" href="<?PHP echo baseUrl('data/css/reset.css') ?>">
+	<link rel="stylesheet" type="text/css" href="<?PHP echo baseUrl('data/css/jquery-ui-1.10.3.custom.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?PHP echo baseUrl('data/css/style.css') ?>">
 </head>
 <body>
@@ -32,9 +33,9 @@
 	</div>
 
 	<div class="search">
-		<!-- <form class="searchform" method="POST" action="/search">
-			<input name="search" type="text" placeholder="Search..">
-		</form> -->
+		<form class="searchform" method="GET" action="<?PHP echo baseUrl('user/search') ?>">
+			<input id="searchBar" name="search" type="text" placeholder="Search.."  autocomplete="off">
+		</form>
 		<img src="<?PHP echo baseUrl('data/css/images/search-icon.png'); ?>" width="16px"/>
 	</div>
 

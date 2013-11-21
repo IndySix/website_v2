@@ -366,11 +366,27 @@ class Controller_User extends Core_Controller {
       if(isset($_GET['search']))
          $data['search'] = $_GET['search'];
 
+      if(isset($_GET['term']))
+         $data['search'] = $_GET['term'];
+
       $data['users'] = $this->ModelUser->searchByUsername($data['search']);
       
-      if($this->uri->segment(3) == 'json')
+      if($this->uri->segment(3) == 'searchBar'){
+         $search = array();
+         $counter = 0;
+         foreach ($data['users'] as $user) {
+            if($counter > 5)
+               break;
+            $item = new stdClass();
+            $item->label = '<div> <img src="'.baseUrl('data/avatars/').$user['avatar'].'" width="25px"> '.$user['username'].'</div>';
+            $item->value = $user['username'];
+            $search[] = $item;
+         }
+         echo json_encode($search);
+      } elseif($this->uri->segment(3) == 'json'){
          echo json_encode($data);
-      else
+      } else{
          $this->load->view('userSearch', $data);
+      }
    }
 }        

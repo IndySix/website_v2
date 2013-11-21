@@ -99,5 +99,51 @@ jQuery(function() {
     });
     checkFriendRequests();
     setInterval(function(){checkFriendRequests();},30000);
+
+    //searchBar
+    //jQeury UI autocomplete html extension
+    var proto = $.ui.autocomplete.prototype,
+    initSource = proto._initSource;
+
+	function filter( array, term ) {
+    	var matcher = new RegExp( $.ui.autocomplete.escapeRegex(term), "i" );
+    	return $.grep( array, function(value) {
+        	return matcher.test( $( "<div>" ).html( value.label || value.value || value ).text() );
+    	});
+	}
+
+	$.extend( proto, {_initSource: function() {
+	        if ( this.options.html && $.isArray(this.options.source) ) {
+	            this.source = function( request, response ) {
+	                response( filter( this.options.source, request.term ) );
+	            };
+	        } else {
+	            initSource.call( this );
+	        }
+    	},_renderItem: function( ul, item) {
+      		return $( "<li></li>" )
+            	.data( "item.autocomplete", item )
+            	.append( $( "<a></a>" )[ this.options.html ? "html" : "text" ]( item.label ) )
+            	.appendTo( ul );
+    	}
+	});
+	//Add autocomplete to searchBar
+
+	var availableTags = [
+		{ label: "<div><img src='http://127.0.0.1/projecten/website_v2/data/avatars/MUaZoJAV_FaD3JBg5QZL0xvnw.png' width='20px'> krukas </div>", value: "krukas" }
+	];
+	
+	$( "#searchBar" ).autocomplete({
+		source:  base_url+"user/search/searchBar", //"http://daveismyname.com/demos/autocomplete/search.php",
+		minLength: 1,
+		html: true,
+		messages: {
+        	noResults: '',
+        	results: function() {}
+    	},
+    	select: function( event, ui ) {
+    		alert(ui)
+    	}
+	});
 });
 

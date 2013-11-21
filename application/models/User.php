@@ -66,7 +66,7 @@ class Model_User extends Core_Model  {
                	WHEN username like ? THEN 1
                	WHEN username like ? THEN 2
                	ELSE 3
-          		END, username';
+          		END, username LIMIT 0, 20';
         $bind[] = '%'.$username.'%';
         $bind[] = $username.' %';
         $bind[] = $username.'%';
