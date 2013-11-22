@@ -18,11 +18,11 @@
 	<?PHP if ($this->ModelLogin->isLoggedin()): ?>
 	<ul>
 		<li><a href="<?PHP echo baseUrl('user') ?>">Profile</a></li>
-		<li><a href="#">Career</a></li>
-		<li><a href="#">Battles</a></li>
-		<li><a href="#">Friends</a></li>
-		<li><a href="#">Video</a></li>
-		<li><a href="#">Ranking</a></li>
+		<li><a href="<?PHP echo baseUrl('level') ?>">Career</a></li>
+		<li><a href="<?PHP echo baseUrl('user/battles') ?>">Battles</a></li>
+		<li><a href="<?PHP echo baseUrl('user/friends') ?>">Friends</a></li>
+		<li><a href="<?PHP echo baseUrl('videos') ?>">Video</a></li>
+		<li><a href="<?PHP echo baseUrl('ranking') ?>">Ranking</a></li>
 		
 	</ul>
 

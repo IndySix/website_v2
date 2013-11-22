@@ -6,6 +6,13 @@ class Controller_User extends Core_Controller {
       $this->view();
    }
 
+   function friends(){
+      $this->load->view('friendsView');
+   }
+   function battles(){
+      $this->load->view('battlesView');
+   }
+
    function view(){
       $this->ModelLogin->checkLogin();
    	
