@@ -60,6 +60,11 @@ class Core_Loader {
         return $c->$key;
     }
 
+    function __isset($k) {
+        $c = Core_Controller::get_instance();
+        return isset($c->$k);
+    }
+
     /**
      *
      * _autoLoad
