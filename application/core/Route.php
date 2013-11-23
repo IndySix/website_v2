@@ -104,6 +104,9 @@ class Core_Route {
         } else {
             $action = $this->action;
         }
+        
+        $controller->controllerName = $this->controller;
+        $controller->controllerAction = $this->action;
 
         try{
             /* Auto-load */
