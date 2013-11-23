@@ -44,25 +44,24 @@
                         <a class="friends" id="friend-requests-button" href="javascript:void(0);"><img src="<?PHP echo baseUrl('data/css/images/friends.png'); ?>" width="20px"></a>
                         <div id="friend-requests">
                             <p>No friend request</p>
-                            <!-- <table cellsapcing="0" cellpadding="0">
-                                <tr>
-                                    <td><img src="img/avatar.png" width="20px"></td>
-                                    <td>Krukas</td>
-                                    <td><a class="accept" href="#">Accept</a></td>
-                                    <td><a class="refuse" href="#">Refuse</a></td>
-                                </tr>
-                            </table> -->
                         </div>
                     </li>
                 </ul>
-                <?PHP else: ?>
-				<ul id="menu">
-					<li><a href="<?PHP echo baseUrl('user/login') ?>">Login</a></li>
-					<li><a href="<?PHP echo baseUrl('user/register') ?>">Register</a></li>
-				</ul>
+                <?PHP elseif($this->controllerName.$this->controllerAction != "Userlogin"): ?>
+                <form class="login" method="post" action="<?PHP echo baseUrl('user/login') ?>">
+					<!-- <li><a href="<?PHP echo baseUrl('user/login') ?>">Login</a></li>
+					<li><a href="<?PHP echo baseUrl('user/register') ?>">Register</a></li> -->
+					<input type="text" name="username" placeholder="username">
+					<input type="password" name="password" placeholder="password">
+					<input class="submit" type="submit" name="login" value="login">
+				</form>
+				<?PHP else: ?>
+				<div class="register" >
+					<a href="<?PHP echo baseUrl('user/register') ?>">Register</a>
+				</div>
 				<?PHP endif; ?>
-            </div>
+            </div> 
         </div>
         <div id="content">
-            <div id="content-title">Home</div>
+            <div id="content-title"><?PHP echo isset($this->contentTitle) ? $this->contentTitle : '';  ?></div>
             <div id="inner-content">

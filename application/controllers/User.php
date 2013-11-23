@@ -3,7 +3,10 @@
 class Controller_User extends Core_Controller {
    
   	function index(){
-      $this->view();
+      if($this->ModelLogin->isLoggedin())
+        $this->view();
+         else
+        $this->register();
    }
 
    function friends(){
@@ -15,6 +18,7 @@ class Controller_User extends Core_Controller {
 
    function view(){
       $this->ModelLogin->checkLogin();
+      $this->contentTitle = "View user";
    	
       $this->load->model('User');
 
@@ -26,6 +30,7 @@ class Controller_User extends Core_Controller {
       $user_loggedin_id = $this->LibSession->get('user_id');
 
       if(!empty($user)){
+         $this->contentTitle = ucfirst($user['username']); 
          $data['owner'] = $user_loggedin_id == $user_id ? true : false;
          $data['isFriend'] = $this->ModelUser->isFriend($user_loggedin_id, $user_id);
          $data['isConnection'] = $this->ModelUser->isConnection($user_loggedin_id, $user_id);
@@ -34,6 +39,12 @@ class Controller_User extends Core_Controller {
          $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
          $data['avatarUrl'] = baseUrl( 'data/avatars/'.$user['avatar'] );
          $data['difficulty'] = $user['difficulty'];
+
+         if ($data['owner']){
+            $edit = '<a href="'.baseUrl('user/edit').'">';
+            $edit .= ' <img src="'.baseUrl( 'data/css/images/edit.png').'" style="height:18px; margin-bottom: -2px"/></a>';
+            $this->contentTitle .= $edit;
+         }
          
          $data['userinfo'] = array();
          if(!empty($user['place']))
@@ -50,13 +61,13 @@ class Controller_User extends Core_Controller {
 
          $this->load->view('userView', $data);
       } else {
-         $data['titleMessage'] = 'Profile does not exists';
-         $data['message']      = 'The profile that you are looking for does not exists!';
+         $data['error']  = 'The profile that you are looking for does not exists!';
          $this->load->view('message', $data);
       }
    }
 
    function login(){
+      $this->contentTitle = "Login";
    	if($this->ModelLogin->isLoggedin()){
          $data['titleMessage'] = 'Already Loggedin';
          $data['message']      = 'You are already loggedin!';
@@ -84,15 +95,16 @@ class Controller_User extends Core_Controller {
       elseif( !$_loginSuccessful)
          $this->load->view('userLogin', $data);
       else
-         redirect("home");
+         redirect("user");
    }
 
    function logout(){
       $this->ModelLogin->logout();
-      $this->login();
+      $this->register();
    }
 
    function register(){
+      $this->contentTitle = "Register";
       $_registerSuccessful = true;
    	$data['username'] = '';
       $data['password'] = '';
@@ -196,6 +208,7 @@ class Controller_User extends Core_Controller {
 
    function edit(){
       $this->ModelLogin->checkLogin();
+      $this->contentTitle = "Edit profile";
       
       $this->load->model('User');
       $this->load->library('Upload');
@@ -367,6 +380,7 @@ class Controller_User extends Core_Controller {
 
    public function search(){
       $this->load->model('User');
+      $this->contentTitle = "Search user";
       $data["user_id"] = $this->LibSession->get('user_id');
       $data['search'] = '';
    

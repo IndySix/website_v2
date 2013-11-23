@@ -1,5 +1,16 @@
+<div class="left">
+	<h1>Beat the King</h1>
+	<ul>
+		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Save and watch your skate progress</li>
+		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Battle with your friends</li>
+		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Online and friend ranking</li>
+		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Beat the KING and become the KING</li>
+	</ul>
+</div>
+<div class="right">
+	<h1>Create account</h1>
 <form method="post" action="<?PHP echo baseUrl('user/register') ?>" id="register-form">
-	<label>Username: </label>
+	<label>Username</label>
 	<input id="username" type="text" placeholder="username" name="username" value="<?PHP echo $username ?>"/></br>
 	<p id="error_username"><?PHP echo $error_username ?></p>
 	
@@ -7,13 +18,14 @@
 	<input id="password" type="password" placeholder="password" name="password" /></br>
 	<p id="error_password"><?PHP echo $error_password ?></p>
 
-	<label>email</label>
+	<label>Email</label>
 	<input id="email" type="text" placeholder="email" name="email" value="<?PHP echo $email ?>" /></br>
 	<p id="error_email"><?PHP echo $error_email ?></p>
 
-	<input type="submit" name="register" value="Register">
-
+	<input type="submit" name="register" value="Create Account">
 </form>
+</div>
+<br style="clear:both;"/>
 
 <script type="text/javascript">
 jQuery( "#register-form" ).submit(function( event ) {
