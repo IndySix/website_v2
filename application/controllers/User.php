@@ -385,7 +385,7 @@ class Controller_User extends Core_Controller {
             if($counter > 5)
                break;
             $item = new stdClass();
-            $item->label = '<div> <img src="'.baseUrl('data/avatars/').$user['avatar'].'" width="25px"> '.$user['username'].'</div>';
+            $item->label = '<div id="'.$user['id'] .'"> <img src="'.baseUrl('data/avatars/').$user['avatar'].'" width="25px"> '.$user['username'].'</div>';
             $item->value = $user['username'];
             $search[] = $item;
          }

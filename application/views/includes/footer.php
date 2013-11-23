@@ -1,9 +1,10 @@
-		</div>
-	</div>	
 </div>
-<div id="footer">
-	<p>Made with &pi; and by IndySix: Jeffrey, Maikel,Vincent, Charlotte, Joost & Michiel </p>
-</div>
-
+        </div>
+        <div id="footer">
+            <div id="inner-footer">
+                Made with π and by IndySix: Jeffrey, Maikel,Vincent, Charlotte, Joost & Michiel 
+            </div>
+        </div>
+    </div>
 </body>
 </html>
