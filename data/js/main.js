@@ -196,13 +196,9 @@ jQuery(function() {
     	}
 	});
 	//Add autocomplete to searchBar
-
-	var availableTags = [
-		{ label: "<div><img src='http://127.0.0.1/projecten/website_v2/data/avatars/MUaZoJAV_FaD3JBg5QZL0xvnw.png' width='20px'> krukas </div>", value: "krukas" }
-	];
 	
 	jQuery( "#searchBar" ).autocomplete({
-		source:  base_url+"user/search/searchBar", //"http://daveismyname.com/demos/autocomplete/search.php",
+		source:  base_url+"user/search/searchBar",
 		minLength: 1,
 		html: true,
 		messages: {
