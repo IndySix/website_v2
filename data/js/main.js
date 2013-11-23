@@ -51,8 +51,13 @@ function checkFriendRequests(){
 
 		html += "</table>"
 		
-		if(counter == 0)
+		if(counter == 0) {
 			html = "<p>No friend request</p>";
+			jQuery('#friend-requests-count').css('display', 'none');
+		} else {
+			jQuery('#friend-requests-count').html(counter);
+			jQuery('#friend-requests-count').css('display', 'block');
+		}
 		jQuery('#friend-requests').html(html);
 		//jQuery('#friend-requests-button').html('request '+counter);
 	});

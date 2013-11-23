@@ -41,7 +41,10 @@
                             <a href="#">Message</a>
                             <a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
                         </div>
-                        <a class="friends" id="friend-requests-button" href="javascript:void(0);"><img src="<?PHP echo baseUrl('data/css/images/friends.png'); ?>" width="20px"></a>
+                        <a class="friends" id="friend-requests-button" href="javascript:void(0);">
+                            <img src="<?PHP echo baseUrl('data/css/images/friends.png'); ?>" width="20px">
+                            <span id="friend-requests-count">0</span>
+                        </a>
                         <div id="friend-requests">
                             <p>No friend request</p>
                         </div>

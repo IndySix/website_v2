@@ -224,6 +224,22 @@ a:hover { text-decoration: underline;}
 }
 
 /* Friend requests drop down*/
+#friend-requests-count {
+	display: none;
+	position: absolute;
+	background-color: #ff6600;
+	padding: 1px;
+	font-size: 10px;
+	line-height: 16px;
+	text-align: center;
+	min-width: 12px;
+	height: 14px;
+	border-radius: 300px;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
+	bottom: -8px;
+	right: -8px;
+}
 #header-items .profile #friend-requests {
 	display: none;
 	position: absolute;
