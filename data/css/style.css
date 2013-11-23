@@ -365,3 +365,34 @@ input[type=submit]{
 	width:48%;
 }
 
+/* search page*/
+#search-results p {
+	margin-bottom: 10px;
+	height: 60px;
+}
+#search-results a {
+	font-family: 'markerfelt-webfont', Fallback, sans-serif;
+	font-size: 20px;
+	text-decoration: none;
+}
+#search-results a:hover { color: #666;}
+#search-results img { vertical-align: middle; padding-right: 10px;}
+#search-results .friend-button { 
+	float: right; 
+}
+
+#search-results .friend-button {
+	width: 100px;
+	font-family: "Myriad Pro",Helvetica, Arial;
+	font-size: 14px;
+	padding: 4px;
+	border: 1px solid green;
+	line-height: 20px;
+	background-color: green;
+	margin: 20px 0px;
+	background-color: #3a8c16;
+	font-weight: bold;
+	text-align: center;
+	//border-color: rgb(59, 110, 34) rgb(59, 110, 34) rgb(44, 81, 21);
+}
+

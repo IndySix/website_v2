@@ -7,12 +7,12 @@ function setFriendButtonStatus(button, status){
 
 	if(status == 'request'){
 		jQuery(button).addClass('friend-request');
-		jQuery(button).html('add friend');
+		jQuery(button).html('Add Friend');
 	} else  if(status == 'request_send'){
 		jQuery(button).addClass('request-send');
-		jQuery(button).html('request send');
+		jQuery(button).html('Request Send');
 	} else if(status == 'friend'){
-		jQuery(button).html('friend');
+		jQuery(button).html('Friend');
 		jQuery(button).addClass('friend');
 	}
 
@@ -107,7 +107,7 @@ jQuery(function() {
 		//get friend status
 		jQuery.get( base_url+"friend/status/"+id, function( data ) {
 			resp = JSON.parse(data);
-			console.log(resp.status);
+			status = resp.status;
 			setFriendButtonStatus(button, resp.status);
 		});
 		
