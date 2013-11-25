@@ -11,16 +11,16 @@
 $host = 'localhost';
 
 /* The username used to connect to MYSQL */
-$user = 'root';
+$user = 'indysix';
 
 /* The password used to connec to MYSQL */
-$password = '';
+$password = 'indysix';
 
 /* The name of the database you want to connect to */
 $database = 'indysix_2';
 
 /* The port number where the MYSQL server is running on, defautl 3306 */
-$port = '3306';
+$port = '8889';
 
 
 /* End of file database.php */
