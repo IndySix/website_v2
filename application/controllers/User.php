@@ -59,10 +59,10 @@ class Controller_User extends Core_Controller {
 
          $data['aboutMe'] = $user['aboutMe'];           
 
-         $this->load->view('userView', $data);
+         $this->loadView('userView', $data);
       } else {
          $data['error']  = 'The profile that you are looking for does not exists!';
-         $this->load->view('message', $data);
+         $this->loadView('message', $data);
       }
    }
 
@@ -71,7 +71,7 @@ class Controller_User extends Core_Controller {
    	if($this->ModelLogin->isLoggedin()){
          $data['titleMessage'] = 'Already Loggedin';
          $data['message']      = 'You are already loggedin!';
-         $this->load->view('message', $data);
+         $this->loadView('message', $data);
          return;
       }
 
@@ -93,7 +93,7 @@ class Controller_User extends Core_Controller {
       if($this->uri->segment(3) == 'json')
          echo json_encode($data);
       elseif( !$_loginSuccessful)
-         $this->load->view('userLogin', $data);
+         $this->loadView('userLogin', $data);
       else
          redirect("user");
    }
@@ -177,7 +177,7 @@ class Controller_User extends Core_Controller {
       if($this->uri->segment(3) == 'json')
          echo json_encode($data);
       elseif( !$_registerSuccessful)
-         $this->load->view('userRegister', $data);
+         $this->loadView('userRegister', $data);
       else
          redirect("home");
    }
@@ -203,7 +203,7 @@ class Controller_User extends Core_Controller {
       } else {
          $data['error'] = 'No valid token is given!';
       }
-      $this->load->view('message', $data); 
+      $this->loadView('message', $data); 
    }
 
    function edit(){
@@ -375,7 +375,7 @@ class Controller_User extends Core_Controller {
       if($this->uri->segment(3) == 'json')
          echo json_encode($data);
       else
-         $this->load->view('userEdit', $data);
+         $this->loadView('userEdit', $data);
    }
 
    public function search(){
@@ -407,7 +407,7 @@ class Controller_User extends Core_Controller {
       } elseif($this->uri->segment(3) == 'json'){
          echo json_encode($data);
       } else{
-         $this->load->view('userSearch', $data);
+         $this->loadView('userSearch', $data);
       }
    }
 }        

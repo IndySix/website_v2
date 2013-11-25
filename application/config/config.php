@@ -71,7 +71,7 @@ $autoload['libraries'] = array('Database', 'Session');
  * Example:
  *      $autoload['model'] = array('model1', 'model2');
  */
-$autoload['model'] = array('Login');
+$autoload['model'] = array('Login', 'App');
 
 
 /* -------------------------------------------------------------------
