@@ -21,7 +21,7 @@ if (!defined('__SITE_PATH'))
  *
  * If this is not set then MartensMVC will guess the protocol, domain and
  * path to your installation. */
-$baseURL = 'http://localhost/projecten/website_v2/';
+$baseURL = 'http://localhost:8888/indysix2/';
 
 
 /* -------------------------------------------------------------------
