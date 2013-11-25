@@ -17,6 +17,7 @@
         <div id="header">
             <div id="inner-header">
             	<?PHP if ($this->ModelLogin->isLoggedin()): ?>
+                <a id="logo" href="#"><img src="<?PHP echo baseUrl('data/css/images/logo.png') ?>"></a>
                 <ul id="menu">
                     <li><a href="<?PHP echo baseUrl('user') ?>">Profile</a></li>
                     <li><a href="<?PHP echo baseUrl('level') ?>">Career</a></li>
@@ -51,6 +52,7 @@
                     </li>
                 </ul>
                 <?PHP elseif($this->controllerName.$this->controllerAction != "Userlogin"): ?>
+                <a id="logo-login" href="#"><img src="<?PHP echo baseUrl('data/css/images/logo.png') ?>"></a>
                 <form class="login" method="post" action="<?PHP echo baseUrl('user/login') ?>">
 					<!-- <li><a href="<?PHP echo baseUrl('user/login') ?>">Login</a></li>
 					<li><a href="<?PHP echo baseUrl('user/register') ?>">Register</a></li> -->
@@ -59,12 +61,19 @@
 					<input class="submit" type="submit" name="login" value="login">
 				</form>
 				<?PHP else: ?>
+                <a id="logo-login" href="#"><img src="<?PHP echo baseUrl('data/css/images/logo.png') ?>"></a>
 				<div class="register" >
 					<a href="<?PHP echo baseUrl('user/register') ?>">Register</a>
 				</div>
 				<?PHP endif; ?>
-            </div> 
+                <br style="clear:both"/>
+            </div>
         </div>
+        <?PHP if ($this->ModelLogin->isLoggedin()): ?>
+            <a id="playButton" href="<?PHP echo baseUrl('?front=game') ?>">
+                Play
+            </a>
+        <?PHP endif; ?>
         <div id="content">
             <div id="content-title"><?PHP echo isset($this->contentTitle) ? $this->contentTitle : '';  ?></div>
             <div id="inner-content">

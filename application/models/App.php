@@ -9,8 +9,12 @@ class Model_App extends Core_Model  {
 	}
 
 	public function checkView(){
-		if(isset($_GET['play'])){
+		if(isset($_GET['front'])){
 			$this->setStateGame();
+			if($_GET['front'] == 'game')
+				$this->setStateGame();
+			else
+				$this->setStateWebsite();
 			return;
 		}
 		if(isset($_COOKIE['frontView'])){
