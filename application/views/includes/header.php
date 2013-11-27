@@ -38,7 +38,7 @@
                         <p><?PHP echo ucfirst( $this->LibSession->get('user_username') ) ?></p>
                         <a class="settings" id="settings-menu-button" href="javascript:void(0);"><img src="<?PHP echo baseUrl('data/img/settings.png'); ?>" width="20px"></a>
                         <div id="settings-menu" class="hide">
-                            <a href="#">Settings</a>
+                            <a href="<?PHP echo baseUrl('user/edit') ?>">Edit profile</a>
                             <a href="#">Message</a>
                             <a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
                         </div>
