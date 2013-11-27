@@ -370,6 +370,7 @@ a:hover { text-decoration: underline;}
 
 /* headings*/
 h1 { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+h2 { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
 
 /* forms */
 label {
@@ -389,6 +390,55 @@ input[type=submit]{
 	font-weight: bold;
 	margin-left: 104px;
 	cursor: pointer;
+}
+
+
+.clear{
+	clear:both;
+}
+
+/* Ranking page */
+
+.ranking h2{color: white;font-family: 'markerfelt-webfont', Fallback, sans-serif; font-size: 24px}
+.ranking ol{
+	list-style-type: decimal;
+	list-style-position:inside;
+	display: block;
+	color: black;
+	border: 1px solid #333;
+	margin-bottom: 20px
+}
+.ranking ol li{
+	padding: 10px;
+	list-style-color: white;
+	font-size: 16px;
+
+}
+.ranking ol li:nth-child(2n){
+	background-color: #d45805
+}
+
+.ranking ol li:first-child{
+	background: url('http://localhost:8888/indysix2/data/css/images/logo.png') no-repeat;
+	background-position:center; 
+}
+span.username{
+	color: white;
+	text-transform: capitalize;
+}
+
+#king{
+	width: 49%;
+	float: left;
+
+}
+#levels{
+	width: 49%;
+	float: right;
+}
+
+.score{
+	float: right;
 }
 
 

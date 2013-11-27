@@ -11,17 +11,17 @@ class Controller_Videos extends Core_Controller {
    	
       $video_id = $this->uri->segment(3);
 
-      $this->load->model('Video');
+      $this->load->model('LevelHistory');
 
       $this->load->model('Level');
 
       $this->load->model('User');
 
-      $video_data = $this->ModelVideo->byId($video_id);
+      $video_data = $this->ModelLevelHistory->byId($video_id);
 
-      $level_data = $this->ModelLevel->byId($video_data['level']);
+      $level_data = $this->ModelLevel->byId($video_data['level_id']);
 
-      $user_data = $this->ModelUser->byId($video_data['user']);      
+      $user_data = $this->ModelUser->byId($video_data['user_id']);      
       
       if(!empty($video_data)){
       	 $data = $video_data;
@@ -36,8 +36,8 @@ class Controller_Videos extends Core_Controller {
    }
 
    function videos(){
-   		$this->load->model('Video');
-		$data['videos'] = $this->ModelVideo->all();
-      	$this->load->view('videosView', $data);
+   	$this->load->model('LevelHistory');
+		$data['videos'] = $this->ModelLevelHistory->all();
+      $this->load->view('videosView', $data);
    }
 }
