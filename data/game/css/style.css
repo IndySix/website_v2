@@ -1,8 +1,30 @@
+@font-face {
+	font-family: 'markerfelt-webfont';
+	src: url('../../font/markerfelt-webfont.eot'); /* IE9 Compat Modes */
+	src: url('../../font/markerfelt-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('../../font/markerfelt-webfont.woff') format('woff'), /* Modern Browsers */
+	     url('../../font/markerfelt-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+	     url('../../font/markerfelt-webfont.svg#markerfelt-webfont') format('svg'); /* Legacy iOS */
+	}
 * { padding: 0px; margin: 0px;}
 /* Layout */
 #resize { height: 100%;	width: 100%; position: absolute; display: none; }
 #topBar { width: 100%; background-color: #fff; }
-#contentWrapper { overflow-y: scroll; overflow-x: hidden; width: 100%; position: relative; -webkit-overflow-scrolling: touch;}
+#contentWrapper { 
+	overflow-y: scroll; 
+	overflow-x: hidden; 
+	width: 100%; 
+	position: 
+	relative; 
+	-webkit-overflow-scrolling: touch;
+	background: #939598; /* Old browsers */
+	background: -moz-linear-gradient(top, #939598 0%, #6d6e71 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#939598), color-stop(100%,#6d6e71)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #939598 0%,#6d6e71 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #939598 0%,#6d6e71 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #939598 0%,#6d6e71 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #939598 0%,#6d6e71 100%); /* W3C */
+}
 #bottomBar { width: 100%; background-color: #fff; }
 body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;}
 
@@ -56,7 +78,8 @@ body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;
 }
 /* content */
 #content {
-	padding: 10px;
+	color: #fff;
+	min-height: 100%;
 }
 /* Menu*/
 #menu {
@@ -102,4 +125,57 @@ body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;
 	border-bottom: 15px solid rgba(255,255,255,0);
 	border-left: 25px solid #ff6600;
 	margin: 15px 20px;
+}
+/* mesasage boxes */
+.success, .warning, .error, .info {
+	border: 1px solid;
+	padding:5px;
+	font-size:13px;
+	margin-bottom: 10px;
+	padding:5px 10px 5px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	border-radius: 5px;
+	margin: 10px;
+}
+.info { color: #00529B; background-color: #BDE5F8; background-image: url('../../img/info.png');}
+.success {color: #4F8A10; background-color: #DFF2BF; background-image:url('../../img/success.png');}
+.warning {color: #9F6000; background-color: #FEEFB3; background-image: url('../../img/warning.png');}
+.error {background-color: #FFBABA; color: #D8000C; background-image: url('../../img/error.png');}
+
+/* Login page*/
+.login {
+	width: 100%;
+	text-align: center;
+}
+.loginLogo {
+	margin-top: 15px;
+}
+.login h1 {
+	font-family: 'markerfelt-webfont', Fallback, sans-serif;
+	margin-bottom: 20px;
+	text-shadow: 2px 2px #666;
+}
+.login input {
+	width: 200px;
+	padding: 8px;
+	font-size: 14px;
+	display: block;
+	margin: 5px auto;
+	border: 1px solid #fff;
+	border-radius: 5px;
+}
+.login input:focus {
+	border-color: #ff6600;
+}
+.login input[type=submit] {
+	border-color: #ff6600;
+	background-color: #ff6600;
+	color: #fff;
+	font-weight: bold;
+	margin: 10px auto;
+}
+.login a {
+	color: #eee;
+	text-decoration: none;
 }
