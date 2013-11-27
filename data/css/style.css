@@ -1,14 +1,14 @@
 @font-face {
 	font-family: 'markerfelt-webfont';
-	src: url('./font/markerfelt-webfont.eot'); /* IE9 Compat Modes */
-	src: url('./font/markerfelt-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-	     url('./font/markerfelt-webfont.woff') format('woff'), /* Modern Browsers */
-	     url('./font/markerfelt-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
-	     url('./font/markerfelt-webfont.svg#markerfelt-webfont') format('svg'); /* Legacy iOS */
+	src: url('../font/markerfelt-webfont.eot'); /* IE9 Compat Modes */
+	src: url('../font/markerfelt-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	     url('../font/markerfelt-webfont.woff') format('woff'), /* Modern Browsers */
+	     url('../font/markerfelt-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+	     url('../font/markerfelt-webfont.svg#markerfelt-webfont') format('svg'); /* Legacy iOS */
 	}
 
 body{
-	background: url('./images/background.jpg');
+	background: url('../img/background.jpg');
 	background-size: cover;
 	background-attachment:fixed;
 	font-family: "Myriad Pro",Helvetica, Arial;
@@ -17,6 +17,7 @@ body{
 }
 
 html, body { height: 100%;}
+html {height: 101%;}
 a { text-decoration: none; color: #fff}
 a:hover { text-decoration: underline;}
 
@@ -30,10 +31,10 @@ a:hover { text-decoration: underline;}
 	background-repeat: no-repeat;
 	background-position: 10px center;
 }
-.info { color: #00529B; background-color: #BDE5F8; background-image: url('./images/info.png');}
-.success {color: #4F8A10; background-color: #DFF2BF; background-image:url('./images/success.png');}
-.warning {color: #9F6000; background-color: #FEEFB3; background-image: url('./images/warning.png');}
-.error {background-color: #FFBABA; color: #D8000C; background-image: url('./images/error.png');}
+.info { color: #00529B; background-color: #BDE5F8; background-image: url('../img/info.png');}
+.success {color: #4F8A10; background-color: #DFF2BF; background-image:url('../img/success.png');}
+.warning {color: #9F6000; background-color: #FEEFB3; background-image: url('../img/warning.png');}
+.error {background-color: #FFBABA; color: #D8000C; background-image: url('../img/error.png');}
 
 #container {position:relative; min-height:100%;}
 
@@ -324,7 +325,7 @@ a:hover { text-decoration: underline;}
 	position: absolute;
 	width: 7px;
 	height: 7px;
-	background: url('./images/left-corner.png') center;
+	background: url('../img/left-corner.png') center;
 }
 #content-title:after {
 	content: ' ';
@@ -334,7 +335,7 @@ a:hover { text-decoration: underline;}
 	position: absolute;
 	width: 7px;
 	height: 7px;
-	background: url('./images/right-corner.png') center;
+	background: url('../img/right-corner.png') center;
 } 
 
 #inner-content { max-width: 1000px; margin: 0 auto; padding: 20px; margin-bottom: 40px; background-color: rgba(255,102,0,0.9); border-bottom: 3px solid #000;}

@@ -1,10 +1,10 @@
 <div class="left">
 	<h1>Beat the King</h1>
 	<ul>
-		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Save and watch your skate progress</li>
-		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Battle with your friends</li>
-		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Online and friend ranking</li>
-		<li><img src="<?PHP echo baseUrl('data/css/images/kroon.png') ?>" height="16px"> Beat the KING and become the KING</li>
+		<li><img src="<?PHP echo baseUrl('data/img/kroon.png') ?>" height="16px"> Save and watch your skate progress</li>
+		<li><img src="<?PHP echo baseUrl('data/img/kroon.png') ?>" height="16px"> Battle with your friends</li>
+		<li><img src="<?PHP echo baseUrl('data/img/kroon.png') ?>" height="16px"> Online and friend ranking</li>
+		<li><img src="<?PHP echo baseUrl('data/img/kroon.png') ?>" height="16px"> Beat the KING and become the KING</li>
 	</ul>
 </div>
 <div class="right">
@@ -56,7 +56,7 @@ jQuery( "#register-form" ).submit(function( event ) {
 			}
 
 			if(validForm){
-				window.location.href = "<?PHP echo baseUrl('home') ?>";
+				window.location.href = "<?PHP echo baseUrl() ?>";
 			}
 		});
 	});

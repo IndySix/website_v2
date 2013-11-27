@@ -3,14 +3,23 @@
 class Controller_User extends Core_Controller {
    
   	function index(){
-      if($this->ModelLogin->isLoggedin())
-        $this->view();
+      if( $this->ModelApp->isGame() ){
+         if($this->ModelLogin->isLoggedin())
+            $this->register();
          else
-        $this->register();
+            $this->view();
+      } else {
+         if($this->ModelLogin->isLoggedin())
+            $this->view();
+         else
+            $this->register();
+      }
    }
 
    function friends(){
-      $this->load->view('friendsView');
+      $this->load->model('User');
+      $data['friends'] = $this->ModelUser->getFriends($this->LibSession->get('user_id'));
+      $this->load->view('friendsView', $data);
    }
    function battles(){
       $this->load->view('battlesView');
@@ -42,7 +51,7 @@ class Controller_User extends Core_Controller {
 
          if ($data['owner']){
             $edit = '<a href="'.baseUrl('user/edit').'">';
-            $edit .= ' <img src="'.baseUrl( 'data/css/images/edit.png').'" style="height:18px; margin-bottom: -2px"/></a>';
+            $edit .= ' <img src="'.baseUrl( 'data/img/edit.png').'" style="height:18px; margin-bottom: -2px"/></a>';
             $this->contentTitle .= $edit;
          }
          
@@ -100,7 +109,7 @@ class Controller_User extends Core_Controller {
 
    function logout(){
       $this->ModelLogin->logout();
-      $this->register();
+      $this->index();
    }
 
    function register(){
@@ -179,7 +188,7 @@ class Controller_User extends Core_Controller {
       elseif( !$_registerSuccessful)
          $this->loadView('userRegister', $data);
       else
-         redirect("home");
+         redirect("user");
    }
 
    function validateEmail(){

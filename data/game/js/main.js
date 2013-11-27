@@ -1,6 +1,5 @@
-$.event.special.swipe.horizontalDistanceThreshold = '100';
+//$.event.special.swipe.horizontalDistanceThreshold = '100';
 var height = 0;
-
 function setContentHeight() {
 	$('#resize').css('height', '100%');
 	height = $("#resize").height() - ( $("#topBar").height() + $("#bottomBar").height() );
@@ -34,14 +33,14 @@ $(function() {
 		}
     });
 
-    $( document ).on( "swiperight", function(){ 
-    	if( $('#settings').hasClass('visible') ){
-    		hideSettings();
-    	}
-    });
-    $( document ).on( "swipeleft", function(){ 
-		if( !$('#settings').hasClass('visible') ) {
-			displaySettings();
-    	}
-    });
+  //   $( document ).on( "swiperight", function(){ 
+  //   	if( $('#settings').hasClass('visible') ){
+  //   		hideSettings();
+  //   	}
+  //   });
+  //   $( document ).on( "swipeleft", function(){ 
+		// if( !$('#settings').hasClass('visible') ) {
+		// 	displaySettings();
+  //   	}
+  //   });
 });
