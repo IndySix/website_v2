@@ -51,7 +51,7 @@ class Controller_User extends Core_Controller {
 
          if ($data['owner']){
             $edit = '<a href="'.baseUrl('user/edit').'">';
-            $edit .= ' <img src="'.baseUrl( 'data/css/images/edit.png').'" style="height:18px; margin-bottom: -2px"/></a>';
+            $edit .= ' <img src="'.baseUrl( 'data/img/edit.png').'" style="height:18px; margin-bottom: -2px"/></a>';
             $this->contentTitle .= $edit;
          }
          
