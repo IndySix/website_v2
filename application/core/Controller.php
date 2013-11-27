@@ -61,13 +61,13 @@ class Core_Controller {
 
     public function loadView($view, $data = array(), $includes = true ){
         if( $this->ModelApp->isGame() ){
-            $this->load->view('includes/gameFooter', array(), false);
+            $this->load->view('includes/gameHeader', array(), false);
             try {
                 $this->load->view('game/'.$view, $data, false);
             } catch (Exception $e) {
                 echo "Page does not exists";
             }
-            $this->load->view('includes/gameHeader', array(), false);
+            $this->load->view('includes/gameFooter', array(), false);
         } else {
             $this->load->view($view, $data, $includes);
         }

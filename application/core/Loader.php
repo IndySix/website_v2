@@ -185,6 +185,11 @@ class Core_Loader {
         }
         include $loadConfig;
 
+        /* Set variables from array */
+        foreach ($data as $key => $value) {
+            $$key = $value;
+        }
+
         /* Load header when set */
         if($autoloadViews && !empty($autoloadHeaderView)){
             $headerFile = __APPLICATION_PATH . 'views/' . $autoloadHeaderView . '.php';
@@ -194,10 +199,6 @@ class Core_Loader {
             include $headerFile;
         }
 
-        /* Set variables from array */
-        foreach ($data as $key => $value) {
-            $$key = $value;
-        }
         $file = __APPLICATION_PATH . 'views/' . $file . '.php';
         if (!is_readable($file)) {
             throw new Exception("View file not exists '" . $file . "'");
