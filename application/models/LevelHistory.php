@@ -19,4 +19,4 @@ class Model_LevelHistory extends Core_Model  {
 			return $result[0];
 		return null;
 	}
-}2
+}

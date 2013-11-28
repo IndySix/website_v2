@@ -7,6 +7,8 @@ class Controller_Level extends Core_Controller {
    }
 
    function view(){
+      $this->contentTitle = "<a href='/indysix2/level'>&#8617; Back to Career</a>";
+
       $this->ModelLogin->checkLogin();
    	
       $level = $this->uri->segment(3);
@@ -26,7 +28,7 @@ class Controller_Level extends Core_Controller {
 
          $data['level'] = $level_data['id'];
          $data['difficulty'] = $level_data['difficulty'];
-         $data['description'] = $level_data['description'];
+         $data['description'] = $level_data['level_description'];
 
          $data['part'] = $level_part;
 
@@ -40,6 +42,8 @@ class Controller_Level extends Core_Controller {
    }
 
    function all(){
+      $this->contentTitle = "Career";
+
 
       $this->load->model('Level');
 

@@ -7,14 +7,14 @@ class Controller_Ranking extends Core_Controller {
    	}
 
 	function ranking(){
-
+ 		$this->contentTitle = "Ranking";
 		$this->ModelLogin->checkLogin();
 
 		// $this->load->model('LevelHistory');
 		// $history = $this->ModelLevelHistory->all();
 
 		
-	    $sql = 'SELECT Users.username, Users.id, SUM(LevelHistory.score) AS highscore FROM LevelHistory, Users WHERE LevelHistory.user_id = Users.id GROUP BY LevelHistory.user_id ORDER BY highscore DESC';
+	    $sql = 'SELECT Users.username, Users.id, SUM(LevelHistory.score) AS highscore FROM LevelHistory, Users WHERE LevelHistory.user_id = Users.id GROUP BY LevelHistory.user_id ORDER BY highscore DESC LIMIT 20';
 		$ranking = $this->db->query($sql);
 		
 		$sql = 'SELECT * FROM Levels';

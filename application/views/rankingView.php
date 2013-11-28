@@ -11,13 +11,13 @@
 	</ol>
 </div>
 
-<div id="levels">
+<div id="levelranking">
 <?php foreach ($levels as $level): ?>
 	<h2><?php echo $level['level_description']; ?></h2>
 	<ol>
 		<?php foreach ($scores as $score): ?>
 			<?php if ($score['level_id'] == $level['id']): ?>
-			<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="username"><?php echo $score['username']; ?></span> <span class="score"><?php echo $score['score']; ?></span></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="username"><?php echo $score['username']; ?></span> <span class="score"><?php echo $score['score']; ?></span></li>
 			<?php endif; ?>
 		<?php endforeach; ?>	
 	</ol>

@@ -7,6 +7,8 @@ class Controller_Videos extends Core_Controller {
    }
 
    function view(){
+      $this->contentTitle = "Video";
+
       $this->ModelLogin->checkLogin();
    	
       $video_id = $this->uri->segment(3);
@@ -36,6 +38,7 @@ class Controller_Videos extends Core_Controller {
    }
 
    function videos(){
+      $this->contentTitle = "Videos";
    	$this->load->model('LevelHistory');
 		$data['videos'] = $this->ModelLevelHistory->all();
       $this->load->view('videosView', $data);
