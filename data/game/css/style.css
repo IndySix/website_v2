@@ -38,10 +38,11 @@ body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;
 }
 /* Settings icon */
 #settings-icon {
-	display: inline-block;
+	display: block;
+	position: absolute; top: 0px; right: 0px;
 	width: 35px;
 	height: 35px;
-	float: right;
+	//float: right;
 	margin: 10px 10px 0px 0px;
 }
 #settings-icon span{
@@ -54,6 +55,8 @@ body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;
 }
 /* Back icon */
 #back-icon {
+	display: block;
+	position: absolute; top: 0px; left: 0px;
 	font-weight: normal;
 	float: left;
 	color: #fe6700;
@@ -115,6 +118,10 @@ body {font-family: "Myriad Pro",Helvetica, Arial;  font-size: 14px;	color: #222;
 }
 #menu .left {
 	float: left;
+}
+.mainButLogo {
+	width: 50px;
+	margin-top: 5px;
 }
 
 .playIcon {

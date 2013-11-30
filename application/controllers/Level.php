@@ -7,8 +7,10 @@ class Controller_Level extends Core_Controller {
    }
 
    function view(){
+      $this->ModelLogin->checkLogin();
       $this->contentTitle = "<a href='/indysix2/level'>&#8617; Back to Career</a>";
       $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
+      $this->ModelApp->setButton('back', baseUrl());
 
       $this->ModelLogin->checkLogin();
    	
@@ -43,8 +45,10 @@ class Controller_Level extends Core_Controller {
    }
 
    function all(){
+      $this->ModelLogin->checkLogin();
       $this->contentTitle = "Career";
       $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
+      $this->ModelApp->setButton('back', baseUrl());
 
 
       $this->load->model('Level');
