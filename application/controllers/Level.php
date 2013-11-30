@@ -8,6 +8,7 @@ class Controller_Level extends Core_Controller {
 
    function view(){
       $this->contentTitle = "<a href='/indysix2/level'>&#8617; Back to Career</a>";
+      $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
 
       $this->ModelLogin->checkLogin();
    	
@@ -37,12 +38,13 @@ class Controller_Level extends Core_Controller {
       } else {
          $data['titleMessage'] = 'Error loading level';
          $data['message']      = 'The level that you are looking for does not exists!';
-         $this->load->view('message', $data);
+         $this->loadView('message', $data);
       }
    }
 
    function all(){
       $this->contentTitle = "Career";
+      $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
 
 
       $this->load->model('Level');
@@ -55,11 +57,11 @@ class Controller_Level extends Core_Controller {
 
       if(!empty($levels)){
          $data['levels'] = $levels;
-         $this->load->view('levelsView', $data);
+         $this->loadView('levelsView', $data);
       } else {
          $data['titleMessage'] = 'Error loading levels';
          $data['message']      = 'Cannot load the list of levels!';
-         $this->load->view('message', $data);
+         $this->loadView('message', $data);
       }
 
    }
