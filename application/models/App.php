@@ -2,10 +2,17 @@
 
 class Model_App extends Core_Model  {
 
-	private $frontView = 'website';
+	private $frontView  = 'website';
+	private $buttons	= array();
 
 	function __construct() {
 		$this->checkView();
+		//set Default app buttons
+		$this->setButton('one', '#', 'Career', baseUrl('data/img/career.png') );
+		$this->setButton('two', '#', 'Battles', baseUrl('data/img/battle.png') );
+		$this->setButton('three', '#', 'Video', baseUrl('data/img/video.png') );
+		$this->setButton('four', '#', 'Ranks', baseUrl('data/img/ranks.png') );
+		$this->setButton('main', baseUrl('level'), '<img class="mainButLogo" src="'.baseUrl('data/img/logo.png').'"/>');//<span class="playIcon"></span>
 	}
 
 	public function checkView(){
@@ -67,4 +74,16 @@ class Model_App extends Core_Model  {
 		return $this->frontView == 'website' ? true : false;
 	}
 
+	public function setButton($button, $linkUrl = '#', $label = '', $imageUrl = ''){
+		$this->buttons[$button] = array('linkUrl'=> $linkUrl,
+										'label' => $label,
+										'imageUrl' => $imageUrl
+										);
+	}
+
+	public function getButtonValue($button, $value = 'label'){
+		if(isset($this->buttons[$button]) && isset($this->buttons[$button][$value]))
+			return $this->buttons[$button][$value];
+		return '';
+	}
 }
