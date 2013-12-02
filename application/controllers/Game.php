@@ -4,4 +4,16 @@ class Controller_Game extends Core_Controller {
 	public function index(){
 
 	}
+
+	public function play(){
+		echo $this->uri->segment(3);
+	}
+
+	private function showQueue(){
+
+	}
+
+	private function playGame(){
+
+	}
 }

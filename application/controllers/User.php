@@ -5,9 +5,9 @@ class Controller_User extends Core_Controller {
   	function index(){
       if( $this->ModelApp->isGame() ){
          if($this->ModelLogin->isLoggedin())
-            $this->register();
-         else
             $this->view();
+         else
+            $this->login();
       } else {
          if($this->ModelLogin->isLoggedin())
             $this->view();

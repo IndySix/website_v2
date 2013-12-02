@@ -353,6 +353,7 @@ a:hover { text-decoration: underline;}
 	#menu li a {padding: 22px 8px;}
 	#header-items {	float: left; padding-left: 10px; margin-top: -30px; width: 90%; margin-left: 68px;}
 	#header #header-items .search input { width: 190px; opacity: 100;}
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -370,6 +371,7 @@ a:hover { text-decoration: underline;}
 
 /* headings*/
 h1 { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+h2 { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
 
 /* forms */
 label {
@@ -391,6 +393,83 @@ input[type=submit]{
 	cursor: pointer;
 }
 
+
+.clear{
+	clear:both;
+}
+
+/* Level - career page */
+#levels li{
+	width: 100%;
+	float: left;
+	margin-bottom: 15px
+}
+.level-image{float: left; width: 33%;}
+.level-data{float: left; width: 64%; padding: 1%;}
+
+.level-data p{
+	color: black;
+}
+/* Ranking page */
+
+.ranking h2{color: white;font-family: 'markerfelt-webfont', Fallback, sans-serif; font-size: 24px}
+.ranking ol{
+	list-style-type: decimal;
+	list-style-position:inside;
+	display: block;
+	color: black;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+	margin-bottom: 20px
+}
+.ranking ol li{
+	padding: 10px;
+	list-style-color: white;
+	font-size: 16px;
+	background-color: #ea792d;
+
+}
+.ranking ol li:nth-child(2n){
+	background-color: #d45805
+}
+
+.ranking ol li:first-child{
+
+	background: no-repeat #ea792d url('http://localhost:8888/indysix2/data/css/images/logo.png') ;
+	background-position:center; 
+
+}
+span.username{
+	color: white;
+	text-transform: capitalize;
+}
+
+#king{
+	width: 49%;
+	float: left;
+
+}
+#levelranking{
+	width: 49%;
+	float: right;
+}
+
+.score{
+	float: right;
+}
+
+/* Video page */
+
+.video{
+	width:30%;
+	float: left;
+	padding-left: 1.5%;
+	padding-right: 1.5%;
+	margin-bottom: 20px;
+}
+.video-embed{
+	width: 100%;
+}
 
 /* login page */
 #content .left {
@@ -416,7 +495,7 @@ input[type=submit]{
 #search-results a:hover { color: #666;}
 #search-results img { vertical-align: middle; padding-right: 10px;}
 #search-results .friend-button { 
-	float: right; 
+	float: right;
 }
 
 #search-results .friend-button {

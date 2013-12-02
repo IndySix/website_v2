@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="<?PHP echo baseUrl('data/game/css/style.css') ?>">
     
-    <script src="<?PHP echo baseUrl('data/game/js/jquery-1.10.2.min.js') ?>"></script>
+    <script src="<?PHP echo baseUrl('data/game/js/jquery-1.10.2.min.js') ?>">jQuery.noConflict();</script>
     <!--<script>
 		$(document).bind("mobileinit", function(){
  			$.mobile.loadingMessage = false;
@@ -23,7 +23,13 @@
 	<div id="topBar">
 		<div id="topTitle">Beat The KING!
 			<?PHP if ($this->ModelLogin->isLoggedin()): ?>
-				<a id="back-icon" href="#"><img src="<?PHP echo baseUrl('data/img/back.png') ?>"> back</a>
+				<?PHP if ( $this->ModelApp->getButtonValue('back', 'linkUrl') != '' ): ?>
+					<a id="back-icon" href="<?PHP echo $this->ModelApp->getButtonValue('back', 'linkUrl') ?>">
+						<img src="<?PHP echo baseUrl('data/img/back.png') ?>">
+						back
+					</a>
+				<?PHP endif; ?>
+				
 				<a id="settings-icon" href="#"><span></span><span></span><span></span></a>
 			<?PHP endif; ?>
 		</div>

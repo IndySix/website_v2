@@ -7,22 +7,24 @@
 	<div id="bottomBar">
 		<div id="menu">
 
-			<a id='playButton' href="#"><span class="playIcon"></span></a>
-			<a class="left" href="#">
-				<img src="<?PHP echo baseUrl('data/img/career.png') ?>"><br>
-				Career
+			<a id='playButton' href="<?PHP echo $this->ModelApp->getButtonValue('main', 'linkUrl') ?>">
+				<?PHP echo $this->ModelApp->getButtonValue('main', 'label') ?>
 			</a>
-			<a class="left" href="#">
-				<img src="<?PHP echo baseUrl('data/img/battle.png') ?>"><br>
-				Battles
+			<a class="left" href="<?PHP echo $this->ModelApp->getButtonValue('one', 'linkUrl') ?>">
+				<img src="<?PHP echo $this->ModelApp->getButtonValue('one', 'imageUrl') ?>"><br>
+				<?PHP echo $this->ModelApp->getButtonValue('one', 'label') ?>
 			</a>
-			<a class="right" href="#">
-				<img src="<?PHP echo baseUrl('data/img/video.png') ?>"><br>
-				Video
+			<a class="left" href="<?PHP echo $this->ModelApp->getButtonValue('two', 'linkUrl') ?>">
+				<img src="<?PHP echo $this->ModelApp->getButtonValue('two', 'imageUrl') ?>"><br>
+				<?PHP echo $this->ModelApp->getButtonValue('two', 'label') ?>
 			</a>
-			<a class="right" href="#">
-				<img src="<?PHP echo baseUrl('data/img/ranks.png') ?>"><br>
-				Ranks
+			<a class="right" href="<?PHP echo $this->ModelApp->getButtonValue('three', 'linkUrl') ?>">
+				<img src="<?PHP echo $this->ModelApp->getButtonValue('three', 'imageUrl') ?>"><br>
+				<?PHP echo $this->ModelApp->getButtonValue('three', 'label') ?>
+			</a>
+			<a class="right" href="<?PHP echo $this->ModelApp->getButtonValue('four', 'linkUrl') ?>">
+				<img src="<?PHP echo $this->ModelApp->getButtonValue('four', 'imageUrl') ?>"><br>
+				<?PHP echo $this->ModelApp->getButtonValue('four', 'label') ?>
 			</a>
 		</div>
 	</div>

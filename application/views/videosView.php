@@ -1,7 +1,13 @@
-<h1>Videos</h1>
 
 <?php foreach ($videos as $video): ?>
 
-<a href="<?php echo baseUrl('videos/view/' . $video['id'])?>"><img src="<?php echo $video['thumbnail']; ?>"></a>
+<div class="video">
+	<a href="<?php echo baseUrl('videos/view/' . $video['id'])?>">
+	 <h2>Level: <?php echo $video['level_id']; ?></h2>
+		<img src="http://placehold.it/300x200" width="100%">
+	</a>
+</div>
 
 <?php endforeach; ?>
+
+<div class="clear"></div>
