@@ -46,7 +46,7 @@ class Model_App extends Core_Model  {
             $secure = false;
         }
         /* Create cookie */
-        setcookie('frontView', 'game', $expire, "/", $domain, $secure, true);
+        setcookie('frontView', 'game', $expire, "/", null, $secure, true);
         $this->frontView = 'game';
 	}
 
@@ -62,7 +62,7 @@ class Model_App extends Core_Model  {
             $secure = false;
         }
         /* Create cookie */
-        setcookie('frontView', 'website', $expire, "/", $domain, $secure, true);
+        setcookie('frontView', 'website', $expire, "/", null, $secure, true);
         $this->frontView = 'website';
 	}
 

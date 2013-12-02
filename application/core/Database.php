@@ -120,6 +120,18 @@ class Core_Database {
     }
 
     /**
+    * lastInsertId
+    *
+    * Returns the last ID used with insert query
+    *
+    * @access public
+    * @return int
+    */
+    public function lastInsertId(){
+        return $this->dbh->lastInsertId();
+    }
+
+    /**
      * where
      *
      * Sets the where condition for the get, delete, update functions.
