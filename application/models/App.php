@@ -10,9 +10,10 @@ class Model_App extends Core_Model  {
 		//set Default app buttons
 		$this->setButton('one', '#', 'Career', baseUrl('data/img/career.png') );
 		$this->setButton('two', '#', 'Battles', baseUrl('data/img/battle.png') );
-		$this->setButton('three', '#', 'Video', baseUrl('data/img/video.png') );
-		$this->setButton('four', '#', 'Ranks', baseUrl('data/img/ranks.png') );
+		$this->setButton('three', '#', 'Ranks', baseUrl('data/img/ranks.png') );
+		$this->setButton('four', '#', 'Video', baseUrl('data/img/video.png') );
 		$this->setButton('main', baseUrl('level'), '<img class="mainButLogo" src="'.baseUrl('data/img/logo.png').'"/>');//<span class="playIcon"></span>
+		$this->setButton('settings', '#', 'settings', baseUrl('#') );
 	}
 
 	public function checkView(){

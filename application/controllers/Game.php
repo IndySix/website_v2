@@ -18,6 +18,7 @@ class Controller_Game extends Core_Controller {
 		$this->load->model('Level');
 
 		$this->ModelApp->setButton('back', baseUrl('game/stop') );
+		$this->ModelApp->setButton('settings', '', '');
 
 		//get Level
 		$levelId = $this->uri->segment(3);
@@ -26,13 +27,14 @@ class Controller_Game extends Core_Controller {
 			redirect('level');
 			return;
 		}
+		$partId = $level['part'];
 		//json set
 		$json = $this->uri->segment(4);
 		$json = $json == 'json';
 
-		$this->ModelLevelPart->addToQueue(1, $user_id);
+		$this->ModelLevelPart->addToQueue($partId, $user_id);
 		
-		$queueList = $this->ModelLevelPart->queue(1);
+		$queueList = $this->ModelLevelPart->queue($partId);
 		$topQueue = $queueList[0];
 		
 		if($topQueue['playing'] == 1){
@@ -81,6 +83,14 @@ class Controller_Game extends Core_Controller {
 		//When first time on playing screen set status to playing
 		if($queue['playing'] == 0)
 			$this->ModelLevelPart->setToPlaying($queue['id']);
+
+		$this->ModelApp->setButton('one', '');
+		$this->ModelApp->setButton('two', '');
+		$this->ModelApp->setButton('three', '');
+		$this->ModelApp->setButton('four', '');
+		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<span class="stopIcon"></span>');
+		$this->ModelApp->setButton('settings', '');
+		$this->ModelApp->setButton('back', '');
 		
 		$data['level'] = $level;
 		$this->loadView('gamePlay', $data);

@@ -29,8 +29,9 @@
 						back
 					</a>
 				<?PHP endif; ?>
-				
-				<a id="settings-icon" href="#"><span></span><span></span><span></span></a>
+				<?PHP if ( $this->ModelApp->getButtonValue('settings', 'linkUrl') != '' ): ?>
+					<a id="settings-icon" href="javascript:void(0)"><span></span><span></span><span></span></a>
+				<?PHP endif; ?>
 			<?PHP endif; ?>
 		</div>
 	</div>

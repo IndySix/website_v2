@@ -34,57 +34,64 @@
 		</ul>
 	</li>
 </ul> -->
-
-<?PHP $partId = $levels[0]['part']; ?>
+<div class="selectMode"><div class="seperator"></div>
+	<a class="career" href="#">
+		<img src="<?PHP echo baseUrl('data/img/big_career_o.png'); ?>">
+	</a>
+	<a class="battles" href="#">
+		<img src="<?PHP echo baseUrl('data/img/big_battles_w.png'); ?>">
+	</a>
+</div>
+<?PHP $partId = $levels[0]['part']; $lock = false; $levelNum = 1; ?>
 <ul class="levelParts">
 	<li>
 		<h1><?PHP echo $levels[0]['description'] ?></h1>
-		<ul class="levels active">
+		<ul class="levels<?PHP echo $levels[0]['part'] == $currentPart ? ' active': '' ?>">
 		<?PHP foreach ($levels as $level): ?>
-		<?PHP if($partId != $level['part']): $partId = $level['part']; ?>
+		<?PHP if($partId != $level['part']): $partId = $level['part']; $lock = false; $levelNum =1; ?>
 			</ul>
 			</li><li>
 			<h1><?PHP echo $level['description'] ?></h1>
-			<ul class="levels">
+			<ul class="levels<?PHP echo $level['part'] == $currentPart ? ' active': '' ?>">
 		<?PHP endif; ?>
 
-		<li>
-			<h2><?PHP echo $level['name'] ?></h2>
+		<li class="<?PHP echo $lock ? 'lock' : '' ?><?PHP echo $level['id'] == $currentLevel ? ' active': '' ?>" data-level-id="<?PHP echo $level['id'] ?>">
+			<h2>Level <?PHP echo $levelNum ?></h2>
 			<div><?PHP echo $level['level_description'] ?></div>
 		</li>
 
+		<?PHP $lock = $level['completed'] == 0 ?>
+		<?PHP $levelNum++; ?>
 		<?PHP endforeach; ?>
 		</ul>
 	</li>
 </ul>
 
-<style type="text/css">
-	.levelParts li ul{
-		display: none;
-	}
-	.levelParts li .active {
-		display: block;
-	}
-	.levels li div {
-		display: none;
-	}
-	.levels .active div{
-		display: block;
-	}
-</style>
 <script type="text/javascript">
 	function setActivePart(part){
 		jQuery('.levelParts ul').removeClass('active');
 		jQuery(part).find('ul').addClass('active');
+		setPlayButton();
 	}
 
 	function setActiveLevel(level){
-		levels = jQuery(level).parent();
-		jQuery( levels ).find('li').removeClass('active');
+		//levels = jQuery(level).parent();
+		jQuery( '.levelParts' ).find('li').removeClass('active');
 		jQuery(level).addClass('active');
+		setPlayButton();
+	}
+	function setPlayButton(){
+		var id = jQuery('.levelParts ul .active').data( "levelId" );
+		if(id != null){
+			jQuery('#playButton').css('border-color', '#ff6600');
+		} else {
+			jQuery('#playButton').css('border-color', '#b2b2b4');
+		}
 	}
 	jQuery('.levels h2').click(function(){
 		level = jQuery(this).parent();
+		if( jQuery( level ).hasClass('lock') )
+			return;
 		setActiveLevel(level);
     });
 
@@ -94,10 +101,12 @@
     });
 
     jQuery(function() {
+    	setPlayButton();
 		//playButton redirect to selected level
     	jQuery('#playButton').click(function(){
-			var id = jQuery('.levelParts .active .active').data( "levelId" );
-			window.location.href = "<?PHP echo baseUrl('game/play/') ?>"+id;
+			var id = jQuery('.levelParts ul .active').data( "levelId" );
+			if(id != null)
+				window.location.href = "<?PHP echo baseUrl('game/play/') ?>"+id;
     	});
 	});
 

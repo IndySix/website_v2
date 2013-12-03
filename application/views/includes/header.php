@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Ramped</title>
     
     <script src="<?PHP echo baseUrl('data/js/jquery-1.10.2.min.js') ?>"> jQuery.noConflict(); </script>
@@ -69,11 +70,9 @@
                 <br style="clear:both"/>
             </div>
         </div>
-        <?PHP if ($this->ModelLogin->isLoggedin()): ?>
             <a id="playButton" href="<?PHP echo baseUrl('?front=game') ?>">
                 Play
             </a>
-        <?PHP endif; ?>
         <div id="content">
             <div id="content-title"><?PHP echo isset($this->contentTitle) ? $this->contentTitle : '';  ?></div>
             <div id="inner-content">

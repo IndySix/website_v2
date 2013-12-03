@@ -50,6 +50,8 @@ class Controller_Level extends Core_Controller {
       $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
       $this->ModelApp->setButton('back', baseUrl());
 
+      $currentLevel = $this->LibSession->get('user_level');
+
       //$sql = 'SELECT * FROM Levels, LevelParts WHERE Levels.part = LevelParts.id';
       $sql = 'SELECT Levels.*, 
                max( COALESCE(levelHistory.level_completed, 0))  as completed, 
@@ -65,6 +67,16 @@ class Controller_Level extends Core_Controller {
                ORDER BY part ASC, Levels.order ASC';
       $bind[] = $this->LibSession->get('user_id');
       $levels = $this->db->query($sql ,$bind);
+
+      $data['currentLevel']   = 0;
+      $data['currentPart']    = 0;
+      foreach ($levels as $level) {
+         if($level['id'] == $currentLevel){
+            $data['currentLevel']   = $level['id'];
+            $data['currentPart']    = $level['part'];
+            break;
+         }
+      }
 
       if(!empty($levels)){
          $data['levels'] = $levels;
