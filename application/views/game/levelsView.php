@@ -1,4 +1,4 @@
-<ul class="levelParts">
+<!-- <ul class="levelParts">
 	<li id="partid-2">
 		<h1>Part 1</h1>
 		<ul class="levels active">
@@ -33,7 +33,31 @@
 			</li>
 		</ul>
 	</li>
+</ul> -->
+
+<?PHP $partId = $levels[0]['part']; ?>
+<ul class="levelParts">
+	<li>
+		<h1><?PHP echo $levels[0]['description'] ?></h1>
+		<ul class="levels active">
+		<?PHP foreach ($levels as $level): ?>
+		<?PHP if($partId != $level['part']): $partId = $level['part']; ?>
+			</ul>
+			</li><li>
+			<h1><?PHP echo $level['description'] ?></h1>
+			<ul class="levels">
+		<?PHP endif; ?>
+
+		<li>
+			<h2><?PHP echo $level['name'] ?></h2>
+			<div><?PHP echo $level['level_description'] ?></div>
+		</li>
+
+		<?PHP endforeach; ?>
+		</ul>
+	</li>
 </ul>
+
 <style type="text/css">
 	.levelParts li ul{
 		display: none;

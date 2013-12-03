@@ -50,14 +50,21 @@ class Controller_Level extends Core_Controller {
       $this->ModelApp->setButton('main', 'javascript:void(0)', '<span class="playIcon"></span>');
       $this->ModelApp->setButton('back', baseUrl());
 
-
-      $this->load->model('Level');
-
-      $this->load->model('LevelPart');
-
-      $sql = 'SELECT * FROM Levels, LevelParts WHERE Levels.part = LevelParts.id';
-
-      $levels = $this->db->query($sql);
+      //$sql = 'SELECT * FROM Levels, LevelParts WHERE Levels.part = LevelParts.id';
+      $sql = 'SELECT Levels.*, 
+               max( COALESCE(levelHistory.level_completed, 0))  as completed, 
+               LevelParts.description,
+               LevelParts.image as partImage
+               FROM Levels
+               LEFT JOIN LevelParts
+               ON Levels.part = LevelParts.id
+               LEFT JOIN levelHistory
+               ON Levels.id = levelHistory.level_id
+               AND user_id = ?
+               GROUP BY id
+               ORDER BY part ASC, Levels.order ASC';
+      $bind[] = $this->LibSession->get('user_id');
+      $levels = $this->db->query($sql ,$bind);
 
       if(!empty($levels)){
          $data['levels'] = $levels;
