@@ -39,7 +39,7 @@ class Controller_Game extends Core_Controller {
 		
 		if($topQueue['playing'] == 1){
 			//check if top players time is up
-			if(datetimeToTimestamp($topQueue['playStartTime'])+(60*2.5) < time() ) {
+			if(datetimeToTimestamp($topQueue['playStartTime'])+$level['playTime'] < time() ) {
 				$this->ModelLevelPart->removeFromQueue($topQueue['id']);
 				if(isset($queueList[1]))
 					$topQueue = $queueList[1];
@@ -80,10 +80,12 @@ class Controller_Game extends Core_Controller {
 	}
 
 	private function playGame($queue, $level){
+		$this->load->model('LevelHistory');
 		//When first time on playing screen set status to playing
-		if($queue['playing'] == 0)
+		if($queue['playing'] == 0) {
+			$queue['playStartTime'] = timestampToDatetime( time() );
 			$this->ModelLevelPart->setToPlaying($queue['id']);
-
+		}
 		$this->ModelApp->setButton('one', '');
 		$this->ModelApp->setButton('two', '');
 		$this->ModelApp->setButton('three', '');
@@ -91,8 +93,45 @@ class Controller_Game extends Core_Controller {
 		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<span class="stopIcon"></span>');
 		$this->ModelApp->setButton('settings', '');
 		$this->ModelApp->setButton('back', '');
+
+		$levelStats = $this->ModelLevelHistory->userLevelStats($level['id'], $this->LibSession->get('user_id') );
 		
-		$data['level'] = $level;
+		$data['level'] 		= $level;
+		$data['part_name'] 	= $this->ModelLevelPart->byId($level['id'])['description'];
+		$data['endTime'] 	= datetimeToTimestamp( $queue['playStartTime'] ) + $level['playTime'];
+		$data['maxScore']  	= $levelStats['score']; 
+		$data['trys']		= $levelStats['trys'];
 		$this->loadView('gamePlay', $data);
+	}
+
+	public function status(){
+		$this->load->model('LevelHistory');
+		$this->load->model('LevelPart');
+		$this->load->model('Level');
+		$json = new stdClass();
+		$json->status = 'stop';
+
+		$levelId 	= $this->uri->segment(3);
+		$userId 	= $this->LibSession->get('user_id');
+
+		$level = $this->ModelLevel->byId($levelId);
+		$savedLevel = $this->ModelLevelHistory->latestsLevelResult($levelId, $userId);
+		$queue = $this->ModelLevelPart->getPlayerInQueue($userId);
+		if($level == null){
+
+		//check if score is saved
+		} elseif($savedLevel != null && datetimeToTimestamp($savedLevel['timestamp'])+120 > time()  ) {
+			$json->status = 'score';
+			$this->ModelLevelPart->removeUserFromQueue($userId);
+		//check if is in queue and time is not up
+		} elseif($queue != null ){
+			if(datetimeToTimestamp($queue['playStartTime'])+$level['playTime'] < time()){ 
+				$this->ModelLevelPart->removeUserFromQueue($userId);
+				$json->status = 'stop';
+			} else {
+				$json->status = 'running';
+			}
+		}
+		echo json_encode($json);
 	}
 }

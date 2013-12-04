@@ -24,12 +24,15 @@ class Model_LevelPart extends Core_Model  {
 		return $this->db->lastInsertId();
 	}
 	public function removeUserFromQueue($userId){
+		if($userId == null)
+			return;
+
 		$this->db->reset();
 		$this->db->where('user_id', $userId);
 		$this->db->delete('PartQueue');
 	}
 
-	private function isInQueue($partId, $userId){
+	public function isInQueue($partId, $userId){
 		$this->db->reset();
 		$this->db->where('user_id', $userId);
 		$result = $this->db->get('PartQueue');
@@ -58,6 +61,13 @@ class Model_LevelPart extends Core_Model  {
 		$update['playing'] = 1;
 		$update['playStartTime'] = timestampToDatetime( time() );
 		$this->db->update('PartQueue', $update);
+	}
+
+	public function getPlayerInQueue($userId){
+		$this->db->reset();
+		$this->db->where('user_id', $userId);
+		$result = $this->db->get('PartQueue');
+		return $this->returnPart($result);
 	}
 
 	private function returnPart($result){
