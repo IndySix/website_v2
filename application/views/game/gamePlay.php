@@ -16,9 +16,22 @@
 </div>
 
 <script type="text/javascript">
-
 var timer_id       = 0;
 var game_end_time  = <?PHP echo $endTime; ?>;
+var game_status_id = 0;
+
+function gameStatus(){
+  jQuery.get( "<?PHP echo baseUrl('game/status/'.$level['id']) ?>", function( data ) {
+    jsonObj = JSON.parse(data);
+    if(jsonObj.status == 'stop') {
+      //Go back to level select or display message
+      window.clearInterval(game_status_id);
+    } else if(jsonObj.status == 'score'){
+      //go to feedback screen
+      window.location.href = "<?PHP echo baseUrl('game/feedback/'.$level['id']) ?>";
+    }
+  });
+}
 
 function timer(){
     var time = -Math.round((new Date().getTime()/1000)- game_end_time);
@@ -32,6 +45,9 @@ function timer(){
         window.clearInterval(timer_id);
     }
 }
+
+gameStatus();
+game_status_id = window.setInterval(gameStatus,3000 );
 
 timer();
 timer_id = window.setInterval(timer,1000 );

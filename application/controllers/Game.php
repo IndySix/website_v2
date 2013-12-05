@@ -120,7 +120,7 @@ class Controller_Game extends Core_Controller {
 		if($level == null){
 
 		//check if score is saved
-		} elseif($savedLevel != null && datetimeToTimestamp($savedLevel['timestamp'])+120 > time()  ) {
+		} elseif($savedLevel != null && datetimeToTimestamp($savedLevel['timestamp'])+30 > time()  ) {
 			$json->status = 'score';
 			$this->ModelLevelPart->removeUserFromQueue($userId);
 		//check if is in queue and time is not up
@@ -133,5 +133,33 @@ class Controller_Game extends Core_Controller {
 			}
 		}
 		echo json_encode($json);
+	}
+
+	public function feedback(){
+		$this->load->model('LevelHistory');
+		$this->load->model('LevelPart');
+		$this->load->model('Level');
+
+		$levelId 	= $this->uri->segment(3);
+		$userId 	= $this->LibSession->get('user_id');
+
+		$level = $this->ModelLevel->byId($levelId);
+		$savedLevel = $this->ModelLevelHistory->latestsLevelResult($levelId, $userId);
+		$levelStats = $this->ModelLevelHistory->userLevelStats( $levelId, $userId );
+
+		if( datetimeToTimestamp($savedLevel['timestamp'])+30 < time() ){
+			//redirect('level');
+			//return;
+		}
+
+		$data['video'] = $savedLevel['video_name'];
+		$data['score'] = $savedLevel['score'];
+		//stars and percentage
+		//$data['']
+		$data['trys']	= $levelStats['trys'];
+		$time = date('i:s', $level['playTime']);
+		$data['time']  	= substr($time, 0, 1) == '0' ? substr($time, 1, 5) : $time;
+
+		$this->loadView('gameFeedback', $data);
 	}
 }
