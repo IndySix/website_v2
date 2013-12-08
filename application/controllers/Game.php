@@ -143,6 +143,13 @@ class Controller_Game extends Core_Controller {
 		$levelId 	= $this->uri->segment(3);
 		$userId 	= $this->LibSession->get('user_id');
 
+		$this->ModelApp->setButton('one', '#', 'Level', baseUrl('data/img/'));
+		$this->ModelApp->setButton('two', '#', 'Skills', baseUrl('data/img/'));
+		$this->ModelApp->setButton('three', baseUrl('game/play/'.$levelId), 'Retry', baseUrl('data/img/'));
+		$this->ModelApp->setButton('four', baseUrl('game/stop'), 'Quit', baseUrl('data/img/'));
+		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<span class="stopIcon"></span>');
+		$this->ModelApp->setButton('settings', '');
+
 		$level = $this->ModelLevel->byId($levelId);
 		$savedLevel = $this->ModelLevelHistory->latestsLevelResult($levelId, $userId);
 		$levelStats = $this->ModelLevelHistory->userLevelStats( $levelId, $userId );
