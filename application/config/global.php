@@ -16,6 +16,9 @@ if (!defined('__SITE_PATH'))
   | __CONTROLLER_NAME     Name of the controller.
   |
  */
+
+define('__API_KEY', '123');
+
 function datetimeToTimestamp($str) {
     if(substr($str, 0,1) == '0')
       return 0;

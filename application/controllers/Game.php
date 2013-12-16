@@ -169,4 +169,15 @@ class Controller_Game extends Core_Controller {
 
 		$this->loadView('gameFeedback', $data);
 	}
+
+	public function save(){
+	$apiKey = $this->uri->segment(3);
+	if($apiKey != __API_KEY) { return; }
+	
+	if(isset($_POST['level_id'])){
+		
+	}
+
+	print "save result";
+	}
 }

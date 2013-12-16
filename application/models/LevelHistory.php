@@ -2,6 +2,16 @@
 
 class Model_LevelHistory extends Core_Model  {
 
+	public function save($levelHistory){
+		$insert['user_id'] 			= $levelHistory['user_id'];
+		$insert['level_id'] 		= $levelHistory['level_id'];
+		$insert['level_completed'] 	= $levelHistory['level_completed'];
+		$insert['video_name'] 		= $levelHistory['video_name'];
+		$insert['score'] 			= $levelHistory['score'];
+		$insert['data'] 			= $levelHistory['data'];
+		$this->db->insert('LevelHistory', $insert); 
+	}
+
 	public function byId($id){
 		$this->db->reset();
 		$this->db->where('id', $id);
