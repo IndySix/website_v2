@@ -359,3 +359,43 @@ video {
 	text-align: center;
 	width: 49%;
 }
+/* User view */
+
+#userView .avatar {
+	width: 80px;
+	padding: 10px;
+	float: left;
+}
+
+#userView .profile{ padding-left: 100px; height: 70px; padding-top: 15px; }
+#userView .profile .username { font-size: 30px; }
+#userView .profile .difficulty { font-size: 20px; color: #353535; text-shadow: none; letter-spacing: 1px; }
+
+#userView h2 {
+	background-color: #ff6600;
+	padding: 5px 10px;
+	font-size: 16px;
+	box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+#userView p {
+	padding: 10px;
+}
+
+#userView p span {
+	font-family: 'markerfelt-webfont', Fallback, sans-serif;
+	font-size: 38px;
+	width: 100%;
+	text-shadow: 2px 2px rgba(0,0,0,0.8);
+}
+#userView .field {
+	display: inline-block;
+	text-align: center;
+	width: 49%;
+	padding: 0px;
+}
+#userView h3 {
+	font-size: 16px;
+	font-weight: normal;
+	color: #353535;
+}

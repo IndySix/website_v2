@@ -39,6 +39,7 @@ class Controller_User extends Core_Controller {
       $user_loggedin_id = $this->LibSession->get('user_id');
 
       if(!empty($user)){
+         $this->load->model('Level');
          $this->contentTitle = ucfirst($user['username']); 
          $data['owner'] = $user_loggedin_id == $user_id ? true : false;
          $data['isFriend'] = $this->ModelUser->isFriend($user_loggedin_id, $user_id);
@@ -48,6 +49,16 @@ class Controller_User extends Core_Controller {
          $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
          $data['avatarUrl'] = baseUrl( 'data/avatars/'.$user['avatar'] );
          $data['difficulty'] = $user['difficulty'];
+
+         //Calculate progress
+         $levels = $this->ModelLevel->allWithUserHis( $user['id'] );
+         $levelCount = count($levels);
+         $levelCompleted = 0;
+         foreach ($levels as $level) {
+            if($level['completed'])
+               $levelCompleted++;
+         }
+         $data['progress'] = (int)(($levelCompleted / $levelCount) * 100);
 
          if ($data['owner']){
             $edit = '<a href="'.baseUrl('user/edit').'">';

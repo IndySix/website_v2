@@ -41,7 +41,9 @@
 	<label>About Me</label>
 	<textarea id="aboutMe" type="text" name="aboutMe" /><?PHP echo $user['aboutMe'] ?></textarea></br>
 
+	<br/>
 	<h3>Change password</h3>
+	<br/>
 	<label>Password</label>
 	<input id="password" type="password" placeholder="password" name="password" /></br>
 	<p id="error_password"><?PHP echo $error_password ?></p>
@@ -53,6 +55,6 @@
 </form>
 
  <script>
-	jQuery( "#birthday" ).datepicker({ dateFormat: "yy-mm-dd", changeYear: true, showOn: "button"});
+	jQuery( "#birthday" ).datepicker({ dateFormat: "yy-mm-dd", changeYear: true, showOn: "button", yearRange: "-100:+0"});
 
 </script>
