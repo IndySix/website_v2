@@ -78,7 +78,7 @@ a:hover { text-decoration: underline;}
 }
 
 /* header login */
-#header .login {height: 24px;padding: 18px 10px; }
+#header .login {height: 24px;padding: 18px 10px; float: right; margin-right: 325px; }
 #header .login input {
 	margin: 0px 5px;
 	height: 18px;
@@ -89,6 +89,12 @@ a:hover { text-decoration: underline;}
 	background-color: #444;
 	color: #fff;
 	width: 100px;
+}
+@media only screen and (max-width: 1440px) {
+	#header .login {height: 24px;padding: 18px 10px; float: right; margin-right: 20%; }
+}
+@media only screen and (max-width: 1070px) {
+	#header .login {height: 24px;padding: 18px 10px; float: right; margin-right: 0px; }
 }
 #header .login input:focus {border-color: #ff6600;}
 #header .login .submit {

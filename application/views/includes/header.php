@@ -36,7 +36,7 @@
                     </li>
                     <li class="profile">
                         <img class="avatar" src="<?PHP echo baseUrl('data/avatars/'.$this->LibSession->get('user_avatar')) ?>" height="24px" />
-                        <p><?PHP echo ucfirst( $this->LibSession->get('user_username') ) ?></p>
+                        <p><a href="<?PHP echo baseUrl('user') ?>"><?PHP echo ucfirst( $this->LibSession->get('user_username') ) ?></a></p>
                         <a class="settings" id="settings-menu-button" href="javascript:void(0);"><img src="<?PHP echo baseUrl('data/img/settings.png'); ?>" width="20px"></a>
                         <div id="settings-menu" class="hide">
                             <a href="<?PHP echo baseUrl('user/edit') ?>">Edit profile</a>
