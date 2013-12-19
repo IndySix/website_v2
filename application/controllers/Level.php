@@ -53,21 +53,6 @@ class Controller_Level extends Core_Controller {
 
       $currentLevel = $this->LibSession->get('user_level');
 
-      //$sql = 'SELECT * FROM Levels, LevelParts WHERE Levels.part = LevelParts.id';
-      // $sql = 'SELECT Levels.*, 
-      //          max( COALESCE(levelHistory.level_completed, 0))  as completed, 
-      //          LevelParts.description,
-      //          LevelParts.image as partImage
-      //          FROM Levels
-      //          LEFT JOIN LevelParts
-      //          ON Levels.part = LevelParts.id
-      //          LEFT JOIN levelHistory
-      //          ON Levels.id = levelHistory.level_id
-      //          AND user_id = ?
-      //          GROUP BY id
-      //          ORDER BY part ASC, Levels.order ASC';
-      // $bind[] = $this->LibSession->get('user_id');
-      // $levels = $this->db->query($sql ,$bind);
       $levels = $this->ModelLevel->allWithUserHis( $this->LibSession->get('user_id') );
 
       $data['currentLevel']   = 0;

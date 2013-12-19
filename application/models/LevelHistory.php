@@ -42,6 +42,14 @@ class Model_LevelHistory extends Core_Model  {
 		return $this->returnLevelHistory($result);
 	}
 
+	public function latestsResult($userId){
+		$sql = 'SELECT levelHistory.*, Levels.order as level, LevelParts.description as partName  
+				FROM levelHistory, Levels, LevelParts WHERE levelHistory.level_id = Levels.id AND Levels.part = LevelParts.id 
+				AND levelHistory.level_completed = 1 AND levelHistory.user_id = ?';
+		$bind[] = $userId;
+		return $this->returnLevelHistory( $this->db->query($sql, $bind) );
+	}
+
 	private function returnLevelHistory($result){
 		if(!empty($result))
 			return $result[0];

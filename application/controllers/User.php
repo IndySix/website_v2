@@ -40,6 +40,7 @@ class Controller_User extends Core_Controller {
 
       if(!empty($user)){
          $this->load->model('Level');
+         $this->load->model('LevelHistory');
          $this->contentTitle = ucfirst($user['username']); 
          $data['owner'] = $user_loggedin_id == $user_id ? true : false;
          $data['isFriend'] = $this->ModelUser->isFriend($user_loggedin_id, $user_id);
@@ -49,6 +50,8 @@ class Controller_User extends Core_Controller {
          $data['registrationDate'] =  date("j F Y", datetimeToTimestamp($user['registrationDate'])); 
          $data['avatarUrl'] = baseUrl( 'data/avatars/'.$user['avatar'] );
          $data['difficulty'] = $user['difficulty'];
+         $data['latestLevelName'] = '';
+         $data['latestLevelScore'] = 0;
 
          //Calculate progress
          $levels = $this->ModelLevel->allWithUserHis( $user['id'] );
@@ -59,6 +62,15 @@ class Controller_User extends Core_Controller {
                $levelCompleted++;
          }
          $data['progress'] = (int)(($levelCompleted / $levelCount) * 100);
+
+         //get latest level
+         $latestLevel = $this->ModelLevelHistory->latestsResult( $user['id'] );
+         if( !empty($latestLevel) ){
+            $data['latestLevelName'] = $latestLevel['partName'].' Level: '.$latestLevel['level'];
+            $data['latestLevelScore'] = $latestLevel['score'];
+         }
+
+
 
          if ($data['owner']){
             $edit = '<a href="'.baseUrl('user/edit').'">';

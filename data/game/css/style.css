@@ -78,9 +78,21 @@ video {
 	background-color: gray;
 	width: 100%;
 	min-height: 100%;
+	padding-top: 10px;
 	-webkit-transition: 0.5s ease;
        -moz-transition: 0.5s ease;
             transition: 0.5s ease;
+}
+#settings a {
+	display: block;
+	margin: 10px 15px;
+	padding: 5px;
+	text-align: center;
+	font-size: 16px;
+	text-decoration: none;
+	color: #fff;
+	background-color: #ff6600;
+	border: 1px solid #bb6644;
 }
 #contentWrapper .visible {
 	right: 0px;

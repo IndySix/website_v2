@@ -1,5 +1,7 @@
 		</div>
 		<div id="settings">
+			<a href="<?PHP echo baseUrl('user') ?>">Profile</a>
+			<a href="<?PHP echo baseUrl('?front=website') ?>">Main website</a>
 			<a href="<?PHP echo baseUrl('user/logout') ?>">Logout</a>
 		</div>
 	</div>
