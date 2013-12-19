@@ -1,3 +1,6 @@
+<?PHP if($saved): ?>
+	<p id="success_edit" class="success">Profile saved</p>
+<?PHP endif; ?>
 <h1>Edit Profile</h1>
 
 <form method="post" enctype="multipart/form-data" action="<?PHP echo baseUrl('user/edit') ?>">

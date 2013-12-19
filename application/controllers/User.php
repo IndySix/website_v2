@@ -254,6 +254,7 @@ class Controller_User extends Core_Controller {
       $user = $this->ModelUser->byId( $this->LibSession->get('user_id') );
       $_validate_user      = null;
       $_editSuccessful     = true;
+      $data['saved']       = false;
       $data['password']    = '';
       $data['password2']   = '';
       $data['email']       = '';
@@ -386,6 +387,7 @@ class Controller_User extends Core_Controller {
          #save results
          if($_editSuccessful){
             $this->load->library('Secure');
+            $data['saved'] = true;
             
             if(empty($_validate_user['password']))
                unset($_validate_user['password']);
