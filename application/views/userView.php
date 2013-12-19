@@ -1,7 +1,12 @@
 
-<h1><?PHP echo $username ?></h1>
+<?PHP if( $user_id != $this->LibSession->get('user_id') ): ?>
+    <a class="friend-button friend-request" href="#" data-id="<?PHP echo $user_id ?>" style="float:right" >Add Friend</a>
+<?PHP endif; ?>
+<h1><?PHP echo $username ?></h1> 
 
 <img src="<?PHP echo $avatarUrl ?>">
+
+
 
 <p>member since: <?PHP echo $registrationDate ?></p>
 <p>level: <?PHP echo $difficulty ?></p>

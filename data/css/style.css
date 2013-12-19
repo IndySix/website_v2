@@ -496,9 +496,11 @@ span.username{
 #search-results img { vertical-align: middle; padding-right: 10px;}
 #search-results .friend-button { 
 	float: right;
+	font-family: "Myriad Pro",Helvetica, Arial;
+	font-size: 14px;
 }
 
-#search-results .friend-button {
+.friend-button {
 	width: 100px;
 	font-family: "Myriad Pro",Helvetica, Arial;
 	font-size: 14px;
