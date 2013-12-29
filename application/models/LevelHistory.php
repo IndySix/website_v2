@@ -20,7 +20,11 @@ class Model_LevelHistory extends Core_Model  {
 	}
 
 	public function all(){
-		$sql = 'SELECT * FROM LevelHistory';
+		$sql = 'SELECT LevelHistory.*, Levels.order as level, LevelParts.description as levelName, Users.username as username 
+				FROM LevelHistory, Levels, LevelParts, Users 
+				WHERE LevelHistory.level_id = Levels.id 
+				AND Levels.part = LevelParts.id
+				AND LevelHistory.user_id = Users.id';
 		return $this->db->query($sql);
 	}
 

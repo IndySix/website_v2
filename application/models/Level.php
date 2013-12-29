@@ -9,6 +9,13 @@ class Model_Level extends Core_Model  {
 		return $this->returnLevel($result);
 	}
 
+	public function byPartId($partId){
+		$this->db->reset();
+		$this->db->where('part', $partId);
+		$this->db->orderBy('order');
+		return $this->db->get('Levels');
+	}
+
 	public function all(){
 		$this->db->reset();
 		$result = $this->db->get('Levels');

@@ -70,11 +70,21 @@ class Controller_Level extends Core_Controller {
          $this->loadView('levelsView', $data);
       } else {
          $data['titleMessage'] = 'Error loading levels';
-         $data['message']      = 'Cannot load the list of levels!';
+         $data['error']      = 'Cannot load the list of levels!';
          $this->loadView('message', $data);
       }
 
    }
 
+   function career(){
+      $this->load->model('Level');
+      $data['levels'] = $this->ModelLevel->byPartId(1);
+      $this->loadView('levelCareer', $data);
+   }
 
+   function battle(){
+      $data['titleMessage'] = 'Not implemented yet';
+      $data['info']      = 'The battle function is not yet implemented!';
+      $this->loadView('message', $data);
+   }
 }        

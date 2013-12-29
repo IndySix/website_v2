@@ -1,5 +1,5 @@
 <?PHP if(isset($titleMessage)): //Display title when set ?>
-        <h1><?PHP echo $titleMessage ?></h1>
+        <h1 class="titleMessage"><?PHP echo $titleMessage ?></h1>
 <?PHP endif; ?>
 
 <?PHP if(isset($info)): //Display message when set ?>

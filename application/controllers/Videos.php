@@ -26,14 +26,14 @@ class Controller_Videos extends Core_Controller {
       $user_data = $this->ModelUser->byId($video_data['user_id']);      
       
       if(!empty($video_data)){
-      	 $data = $video_data;
-      	 $data['level_data'] = $level_data;
-          $data['user_data'] = $user_data;
-         $this->load->view('videoView', $data);
+      	$data = $video_data;
+      	$data['level_data'] = $level_data;
+         $data['user_data'] = $user_data;
+         $this->loadView('videoView', $data);
       } else {
          $data['titleMessage'] = 'Error loading video';
          $data['message']      = 'The video that you are looking for does not exists!';
-         $this->load->view('message', $data);
+         $this->loadView('message', $data);
       }
    }
 
@@ -41,6 +41,6 @@ class Controller_Videos extends Core_Controller {
       $this->contentTitle = "Videos";
    	$this->load->model('LevelHistory');
 		$data['videos'] = $this->ModelLevelHistory->all();
-      $this->load->view('videosView', $data);
+      $this->loadView('videosView', $data);
    }
 }

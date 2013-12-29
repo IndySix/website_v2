@@ -8,9 +8,9 @@ class Model_App extends Core_Model  {
 	function __construct() {
 		$this->checkView();
 		//set Default app buttons
-		$this->setButton('one', '#', 'Career', baseUrl('data/img/career.png') );
-		$this->setButton('two', '#', 'Battles', baseUrl('data/img/battle.png') );
-		$this->setButton('three', '#', 'Video', baseUrl('data/img/video.png') );
+		$this->setButton('one', baseUrl('level/career'), 'Career', baseUrl('data/img/career.png') );
+		$this->setButton('two', baseUrl('level/battle'), 'Battles', baseUrl('data/img/battle.png') );
+		$this->setButton('three', baseUrl('videos/videos'), 'Video', baseUrl('data/img/video.png') );
 		$this->setButton('four', '#', 'Ranks', baseUrl('data/img/ranks.png') );
 		
 		$this->setButton('main', baseUrl('level'), '<img class="mainButLogo" src="'.baseUrl('data/img/logo.png').'"/>');//<span class="playIcon"></span>
