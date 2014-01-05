@@ -16,6 +16,13 @@ class Model_Level extends Core_Model  {
 		return $this->db->get('Levels');
 	}
 
+	public function byPartIdAndOrder($partId, $order){
+		$sql 	= 'SELECT * FROM Levels WHERE part = ? AND `order` = ?';
+		$bind[] = $partId;
+		$bind[]	= $order;
+		return $this->db->query($sql, $bind);
+	}
+
 	public function all(){
 		$this->db->reset();
 		$result = $this->db->get('Levels');
