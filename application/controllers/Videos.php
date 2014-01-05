@@ -7,28 +7,22 @@ class Controller_Videos extends Core_Controller {
    }
 
    function view(){
-      $this->contentTitle = "Video";
-
       $this->ModelLogin->checkLogin();
-   	
-      $video_id = $this->uri->segment(3);
 
       $this->load->model('LevelHistory');
-
       $this->load->model('Level');
-
       $this->load->model('User');
-
-      $video_data = $this->ModelLevelHistory->byId($video_id);
-
-      $level_data = $this->ModelLevel->byId($video_data['level_id']);
-
-      $user_data = $this->ModelUser->byId($video_data['user_id']);      
       
-      if(!empty($video_data)){
-      	$data = $video_data;
-      	$data['level_data'] = $level_data;
-         $data['user_data'] = $user_data;
+      $this->contentTitle = "Video";
+      $video_id = $this->uri->segment(3);
+
+      $this->ModelApp->setButton('back', baseUrl('videos/videos') );
+
+      $data = $this->ModelLevelHistory->byId($video_id); 
+      
+      if(!empty($data)){
+         //$data['level_data'] = $this->ModelLevel->byId($data['level_id']);
+         //$data['user_data'] = $this->ModelUser->byId($data['user_id']);    
          $this->loadView('videoView', $data);
       } else {
          $data['titleMessage'] = 'Error loading video';
