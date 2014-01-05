@@ -31,7 +31,7 @@ class Model_LevelHistory extends Core_Model  {
 	public function userLevelStats($levelId, $userId){
 		$sql ='SELECT count(id) as trys,
 			   COALESCE( max( score), 0) as score
-			   FROM levelHistory WHERE level_id = ? AND user_id = ?';
+			   FROM LevelHistory WHERE level_id = ? AND user_id = ?';
 		$bind[] = $levelId;
 		$bind[] = $userId;
 		$result = $this->db->query($sql, $bind);
@@ -39,7 +39,7 @@ class Model_LevelHistory extends Core_Model  {
 	}
 
 	public function latestsLevelResult($levelId, $userId){
-		$sql = 'SELECT * FROM `levelHistory` WHERE id in (SELECT max(id) FROM levelHistory WHERE level_id = ? AND user_id = ?)';
+		$sql = 'SELECT * FROM `LevelHistory` WHERE id in (SELECT max(id) FROM LevelHistory WHERE level_id = ? AND user_id = ?)';
 		$bind[] = $levelId;
 		$bind[] = $userId;
 		$result = $this->db->query($sql, $bind);
@@ -47,9 +47,9 @@ class Model_LevelHistory extends Core_Model  {
 	}
 
 	public function latestsResult($userId){
-		$sql = 'SELECT levelHistory.*, Levels.order as level, LevelParts.description as partName  
-				FROM levelHistory, Levels, LevelParts WHERE levelHistory.level_id = Levels.id AND Levels.part = LevelParts.id 
-				AND levelHistory.level_completed = 1 AND levelHistory.user_id = ?';
+		$sql = 'SELECT LevelHistory.*, Levels.order as level, LevelParts.description as partName  
+				FROM LevelHistory, Levels, LevelParts WHERE LevelHistory.level_id = Levels.id AND Levels.part = LevelParts.id 
+				AND LevelHistory.level_completed = 1 AND LevelHistory.user_id = ?';
 		$bind[] = $userId;
 		return $this->returnLevelHistory( $this->db->query($sql, $bind) );
 	}
