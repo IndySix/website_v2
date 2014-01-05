@@ -61,7 +61,8 @@ class Controller_User extends Core_Controller {
             if($level['completed'])
                $levelCompleted++;
          }
-         $data['progress'] = (int)(($levelCompleted / $levelCount) * 100);
+
+         $data['progress'] = $levelCount == 0 ? 0 : (int)(($levelCompleted / $levelCount) * 100);
 
          //get latest level
          $latestLevel = $this->ModelLevelHistory->latestsResult( $user['id'] );

@@ -45,9 +45,10 @@
     	var progress = 0;
     	var curruntProgress = <?PHP echo $data['progress']; ?>;
     	var timer = setInterval(function(){
-    	progress += 1;
-    	if(progress > curruntProgress){
+    	if(progress >= curruntProgress){
     		window.clearInterval(timer)
+    	} else {
+    		progress += 1;
     	}
     	jQuery(".knob").val(progress).trigger("change");
     	},10);
