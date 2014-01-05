@@ -54,6 +54,17 @@ class Model_LevelHistory extends Core_Model  {
 		return $this->returnLevelHistory( $this->db->query($sql, $bind) );
 	}
 
+	public function rankingKing(){
+		$sql = 'SELECT U.username, U.id, SUM(LH.score) AS highscore 
+				FROM LevelHistory AS LH, Users AS U 
+				WHERE LH.user_id = U.id
+				AND LH.level_completed = 1
+				AND LH.score = (SELECT max(score) FROM LevelHistory WHERE LH.level_id = level_id)
+				GROUP BY LH.user_id 
+				ORDER BY highscore DESC LIMIT 20';
+		return $this->db->query($sql);
+	}
+
 	private function returnLevelHistory($result){
 		if(!empty($result))
 			return $result[0];

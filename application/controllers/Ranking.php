@@ -9,14 +9,11 @@ class Controller_Ranking extends Core_Controller {
 	function ranking(){
  		$this->contentTitle = "Ranking";
 		$this->ModelLogin->checkLogin();
-
-		// $this->load->model('LevelHistory');
-		// $history = $this->ModelLevelHistory->all();
-
+		$this->load->model('LevelHistory');
 		
-	    $sql = 'SELECT Users.username, Users.id, SUM(LevelHistory.score) AS highscore FROM LevelHistory, Users WHERE LevelHistory.user_id = Users.id GROUP BY LevelHistory.user_id ORDER BY highscore DESC LIMIT 20';
-		$ranking = $this->db->query($sql);
-		
+		//get King ranking
+		$data['ranking'] = $this->ModelLevelHistory->rankingKing();
+
 		$sql = 'SELECT * FROM Levels';
 		$levels = $this->db->query($sql);
 
@@ -25,16 +22,14 @@ class Controller_Ranking extends Core_Controller {
 
 		// print_r($levels);
 
-		if(!empty($ranking)){
-			// $data['history'] = $history;
-			$data['ranking'] = $ranking;
+		if(!empty($data['ranking'])){
 			$data['levels'] = $levels;
 			$data['scores'] = $scores;
-			$this->load->view('rankingView', $data);
+			$this->loadView('rankingView', $data);
 		} else {
 			$data['titleMessage'] = 'Error loading ranking';
 			$data['message']      = 'The ranking could not be loaded!';
-			$this->load->view('message', $data);
+			$this->loadView('message', $data);
 		}
    	}
 }
