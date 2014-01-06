@@ -1,5 +1,5 @@
 var l = window.location;
-var base_url = l.protocol + "//" + l.host + "/indysix2/";
+var base_url = l.protocol + "//" + l.host + "/projecten/website_v2/";
 
 function setFriendButtonStatus(button, status){
 	//reset button

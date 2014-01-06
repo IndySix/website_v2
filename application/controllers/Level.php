@@ -78,11 +78,20 @@ class Controller_Level extends Core_Controller {
 
    function career(){
       $this->load->model('Level');
-      $data['levels'] = $this->ModelLevel->byPartId(1);
+      $this->ModelApp->setButton('back', baseUrl());
+
+      $sql = 'SELECT * , COALESCE( (SELECT max(score) FROM LevelHistory WHERE level_id = Levels.id AND level_completed = 1 ), 0) AS score
+              FROM Levels
+              WHERE part = 1
+              ORDER BY Levels.order ASC';
+
+      $data['levels'] = $this->db->query($sql);
+      //$data['levels'] = $this->ModelLevel->byPartId(1);
       $this->loadView('levelCareer', $data);
    }
 
    function battle(){
+      $this->ModelApp->setButton('back', baseUrl());
       $data['titleMessage'] = 'Not implemented yet';
       $data['info']      = 'The battle function is not yet implemented!';
       $this->loadView('message', $data);

@@ -34,6 +34,7 @@ class Controller_Videos extends Core_Controller {
    function videos(){
       $this->contentTitle = "Videos";
    	$this->load->model('LevelHistory');
+      $this->ModelApp->setButton('back', baseUrl());
 		$data['videos'] = $this->ModelLevelHistory->all();
       $this->loadView('videosView', $data);
    }

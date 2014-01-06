@@ -7,6 +7,7 @@ class Controller_Ranking extends Core_Controller {
    	}
 
 	function ranking(){
+		$this->ModelApp->setButton('back', baseUrl());
  		$this->contentTitle = "Ranking";
 		$this->ModelLogin->checkLogin();
 		$this->load->model('LevelHistory');
@@ -14,17 +15,10 @@ class Controller_Ranking extends Core_Controller {
 		//get King ranking
 		$data['ranking'] = $this->ModelLevelHistory->rankingKing();
 
-		$sql = 'SELECT * FROM Levels';
-		$levels = $this->db->query($sql);
-
-		$sql = 'SELECT * FROM Levels, LevelHistory, Users WHERE Levels.id = LevelHistory.level_id AND LevelHistory.user_id = Users.id ORDER BY LevelHistory.score DESC LIMIT 10';
-		$scores = $this->db->query($sql);
-
-		// print_r($levels);
+		//Level ranking
+		$data['levelRanking'] = $this->ModelLevelHistory->rankingLevels();
 
 		if(!empty($data['ranking'])){
-			$data['levels'] = $levels;
-			$data['scores'] = $scores;
 			$this->loadView('rankingView', $data);
 		} else {
 			$data['titleMessage'] = 'Error loading ranking';

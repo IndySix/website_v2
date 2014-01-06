@@ -65,6 +65,26 @@ class Model_LevelHistory extends Core_Model  {
 		return $this->db->query($sql);
 	}
 
+	public function rankingLevels(){
+		$sql = 'SELECT LP.id AS part_id, L.id AS level_id, LP.description AS levelName, L.order AS level 
+				FROM LevelParts AS LP, Levels AS L  
+				WHERE L.part = LP.id
+				ORDER BY part_id, level ASC';
+		$levels = $this->db->query($sql);
+
+		$sql = 'SELECT LH.score, U.username, U.avatar
+				FROM LevelHistory AS LH, Users AS U
+				WHERE LH.user_id = U.id
+				AND LH.level_id = ?
+				ORDER BY score DESC
+				LIMIT 5';
+		foreach ($levels as $key => $level) {
+			$bind[0] = $level['level_id'];
+			$levels[$key]['ranks'] = $this->db->query($sql, $bind);
+		}
+		return $levels;
+	}
+
 	private function returnLevelHistory($result){
 		if(!empty($result))
 			return $result[0];

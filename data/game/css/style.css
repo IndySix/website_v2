@@ -427,23 +427,69 @@ video {
 
 
 /* levelCarreer */
-#levelCarreer {
- margin: 10px;
- position: relative;
+#map {
+	margin: 10px;
+	position: relative;
+}
+#map img {
+	width: 100%;
 }
 
-#levelCarreer img {
-	width: 100%;
+#levelCarreer .button {
+	position: absolute;
+	top:53%;
+	left: 35%;
+	width: 16%;
 }
 
 #levelCarreer a {
 	position: absolute;
 	display: block;
-	background-color: rgba(1,1,1,0.5);
-	width: 31.25%;
-	height: 21.88%;
+	//background-color: rgba(1,1,1,0.4);
+	padding-top: 6%;
+	color: #fff;
+	width: 30%;
+	height: 15%;
+}
+#levelCarreer #link-level1 {
+	top: 61%;
+	left: 60%;
+}
+#levelCarreer #link-level2 {
 	top: 50%;
 	left: 9%;
+}
+#levelCarreer #link-level3 {
+	top: 34%;
+	left: 64%;
+}
+.level {display: none;}
+.level h1 {
+	background-color: #ff6600;
+	padding: 5px 10px;
+	font-size: 16px;
+	box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.level p {
+	margin: 10px;
+}
+
+.level hr {
+	margin: 10px;
+	color: #ff6600;
+	border: 1px solid #ff6600;
+}
+
+.level p span {
+	display: inline-block;
+	width: 49%;
+}
+
+.level p span:last-child {
+	font-family: 'markerfelt-webfont',Fallback,sans-serif;
+	font-size: 20px;
+	text-shadow: 2px 2px #333;
 }
 
 /* videosView */
