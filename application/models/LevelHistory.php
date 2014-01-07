@@ -55,7 +55,7 @@ class Model_LevelHistory extends Core_Model  {
 	}
 
 	public function rankingKing(){
-		$sql = 'SELECT U.username, U.id, SUM(LH.score) AS highscore 
+		$sql = 'SELECT U.avatar, U.username, U.id, SUM(LH.score) AS highscore 
 				FROM LevelHistory AS LH, Users AS U 
 				WHERE LH.user_id = U.id
 				AND LH.level_completed = 1
@@ -83,6 +83,26 @@ class Model_LevelHistory extends Core_Model  {
 			$levels[$key]['ranks'] = $this->db->query($sql, $bind);
 		}
 		return $levels;
+	}
+
+	public function rankingParts(){
+		$sql 	= 'SELECT * FROM LevelParts';
+		$parts 	= $this->db->query($sql);
+		$sql 	= 'SELECT U.avatar, U.username, U.id, sum(LH.score) AS score
+					FROM Levels AS L, LevelHistory AS LH, Users AS U
+					WHERE L.id = LH.level_id
+					AND U.id = LH.user_id
+					AND L.part = ?
+					AND LH.level_completed = 1
+					AND LH.score = (SELECT max(score) FROM LevelHistory WHERE level_id = L.id )
+					GROUP BY U.id
+					ORDER BY score DESC
+					LIMIT 5';
+		foreach ($parts as $key => $part) {
+			$bind[0] = $part['id'];
+			$parts[$key]['ranks'] = $this->db->query($sql, $bind);
+		}
+		return $parts;
 	}
 
 	private function returnLevelHistory($result){

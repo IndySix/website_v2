@@ -1,0 +1,1 @@
+<img src="<?PHP echo baseUrl('data/img/battle_page.png') ?>">

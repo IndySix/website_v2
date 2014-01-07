@@ -9,6 +9,7 @@ class Controller_Game extends Core_Controller {
 		$user_id = $this->LibSession->get('user_id');
 		$this->load->model('LevelPart');
 		$this->ModelLevelPart->removeUserFromQueue($user_id);
+		file_get_contents(__BOX_ADDRESS.'stop');
 		redirect('level');
 	}
 
@@ -85,6 +86,20 @@ class Controller_Game extends Core_Controller {
 		if($queue['playing'] == 0) {
 			$queue['playStartTime'] = timestampToDatetime( time() );
 			$this->ModelLevelPart->setToPlaying($queue['id']);
+
+			//Send start data to box
+			$url = __BOX_ADDRESS.'start';
+			$level['queue'] = $queue;
+			$postData = 'data='.json_encode( $level );
+
+			$ch = curl_init( $url );
+			curl_setopt( $ch, CURLOPT_POST, 1);
+			curl_setopt( $ch, CURLOPT_POSTFIELDS, $postData);
+			curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt( $ch, CURLOPT_HEADER, 0);
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+
+			curl_exec( $ch );
 		}
 		$this->ModelApp->setButton('one', '');
 		$this->ModelApp->setButton('two', '');

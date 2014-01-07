@@ -18,6 +18,9 @@ class Controller_Ranking extends Core_Controller {
 		//Level ranking
 		$data['levelRanking'] = $this->ModelLevelHistory->rankingLevels();
 
+		//Part ranking
+		$data['partRanking'] = $this->ModelLevelHistory->rankingParts();
+
 		if(!empty($data['ranking'])){
 			$this->loadView('rankingView', $data);
 		} else {

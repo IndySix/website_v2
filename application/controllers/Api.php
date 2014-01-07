@@ -24,6 +24,7 @@ class Controller_Api extends Core_Controller {
 
 		$this->load->model('User');
       	$this->load->model('Level');
+      	$this->load->model('LevelPart');
       	$this->load->model('LevelHistory');
 
       	$partId = $this->uri->segment(3);
@@ -53,7 +54,8 @@ class Controller_Api extends Core_Controller {
 	                  $movieFileName = $this->upload->getFileName();
 	               }
 	            }
-
+	            //Remove from queue
+	            $this->ModelLevelPart->removeFromQueue($user['id']);
 	            //Save challenge result
 	            $insert['level_id'] 		= $level['id'];
 	            $insert['user_id'] 			= $user['id'];

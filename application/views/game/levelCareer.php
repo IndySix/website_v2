@@ -1,4 +1,5 @@
 <div id="levelCarreer">
+	<h1>Grindlow</h1>
 	<div id="map">
  		<img src="<?PHP echo baseUrl('data/img/career_map.jpg') ?>">
  		<a id="link-level1" href="#level1" onClick="displayLevel('level1')">
@@ -36,7 +37,7 @@
  		</p>
  		<hr />
  		<p>
- 			<span>Level</span>
+ 			<span>Level <?php echo isset( $levels[0]['score'] ) ? $levels[0]['score'] : 0 ?> pt</span>
  			<span>25% Compleet</span>
  		</p>
  	</div>
@@ -50,7 +51,7 @@ If you're going fast enough, you'll grind over the rail. Keeping your balance sh
  		</p>
  		<hr />
  		<p>
- 			<span>Level</span>
+ 			<span>Level <?php echo isset( $levels[0]['score'] ) ? $levels[1]['score'] : 0 ?> pt</span>
  			<span>25% Compleet</span>
  		</p>
  	</div>
@@ -66,7 +67,7 @@ Slide untill the end of the rail, then lift up the nose of the board and turn it
  		</p>
  		<hr />
  		<p>
- 			<span>Level</span>
+ 			<span>Level <?php echo isset( $levels[0]['score'] ) ? $levels[2]['score'] : 0 ?> pt</span>
  			<span>25% Compleet</span>
  		</p>
  	</div>

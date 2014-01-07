@@ -94,6 +94,6 @@ class Controller_Level extends Core_Controller {
       $this->ModelApp->setButton('back', baseUrl());
       $data['titleMessage'] = 'Not implemented yet';
       $data['info']      = 'The battle function is not yet implemented!';
-      $this->loadView('message', $data);
+      $this->loadView('levelBattle', $data);
    }
 }        

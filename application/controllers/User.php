@@ -35,6 +35,10 @@ class Controller_User extends Core_Controller {
       if($user_id == null || !is_numeric($user_id))
          $user_id = $this->LibSession->get('user_id');
 
+      //ranking back button
+      if($this->uri->segment(4) == 'ranking')
+         $this->ModelApp->setButton('back', baseUrl('ranking'));
+
       $user = $this->ModelUser->byId($user_id);
       $user_loggedin_id = $this->LibSession->get('user_id');
 
