@@ -32,7 +32,8 @@ class Controller_Api extends Core_Controller {
 
       	$username = isset($_POST['username']) ? $_POST['username'] : null;
       	$result = isset($_POST['result']) ? $_POST['result'] : null;
-      	$movie = isset($_FILES["movie"]) ? $_FILES["movie"] : null;
+      	//$movie = isset($_FILES["movie"]) ? $_FILES["movie"] : null;
+      	$movie = isset($_POST["movie"]) ? $_POST["movie"] : null;
 
       	$level = $this->ModelLevel->byPartIdAndOrder($partId, $order);
       	$user = $this->ModelUser->byUsername($username);
@@ -45,15 +46,15 @@ class Controller_Api extends Core_Controller {
          	//Check if score is positive
 	         if($score > 0) {
 	            //upload video when uploaded
-	            $movieFileName = null;
-	            if(!empty($movie)) {
-	               $this->load->library("upload");
-	               $this->upload->loadFile($movie);
+	            //$movieFileName = null;
+	            // if(!empty($movie)) {
+	            //    $this->load->library("upload");
+	            //    $this->upload->loadFile($movie);
 
-	               if($this->upload->uploadFile() ) {
-	                  $movieFileName = $this->upload->getFileName();
-	               }
-	            }
+	            //    if($this->upload->uploadFile() ) {
+	            //       $movieFileName = $this->upload->getFileName();
+	            //    }
+	            // }
 	            //Remove from queue
 	            $this->ModelLevelPart->removeFromQueue($user['id']);
 	            //Save challenge result
@@ -62,7 +63,7 @@ class Controller_Api extends Core_Controller {
 	            $insert['score'] 			= $score;
 	            $insert['level_completed'] 	= true;
 	            $insert['data'] 			= $result;
-	            $insert['video_name'] 			= $movieFileName;
+	            $insert['video_name'] 		= $movie;
 	            $this->ModelLevelHistory->save($insert);
 
 	            $this->JSend->data = $score;
