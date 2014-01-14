@@ -282,8 +282,8 @@ class Controller_User extends Core_Controller {
          $this->load->library('Upload');
 
          $this->LibUpload->setIsImage(true);
-         $this->LibUpload->setMaximumWidth(120);
-         $this->LibUpload->setMaximumHeight(120);
+         $this->LibUpload->setMaximumWidth(500);
+         $this->LibUpload->setMaximumHeight(500);
          $this->LibUpload->setValidExtensions("jpg|jpeg|png");
          $this->LibUpload->setUploadDirectory('data/avatars');
 
