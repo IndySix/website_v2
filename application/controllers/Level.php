@@ -82,7 +82,7 @@ class Controller_Level extends Core_Controller {
 
       $sql = 'SELECT * , COALESCE( (SELECT max(score) FROM LevelHistory WHERE level_id = Levels.id AND level_completed = 1 ), 0) AS score
               FROM Levels
-              WHERE part = 1
+              WHERE part = 4
               ORDER BY Levels.order ASC';
 
       $data['levels'] = $this->db->query($sql);

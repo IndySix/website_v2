@@ -105,6 +105,7 @@
 		//playButton redirect to selected level
     	jQuery('#playButton').click(function(){
 			var id = jQuery('.levelParts ul .active').data( "levelId" );
+			console.log("<?PHP echo baseUrl('game/play/') ?>");
 			if(id != null)
 				window.location.href = "<?PHP echo baseUrl('game/play/') ?>"+id;
     	});
