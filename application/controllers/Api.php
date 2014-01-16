@@ -19,7 +19,7 @@ class Controller_Api extends Core_Controller {
 	}
 
 	public function saveGame(){
-		$this->index();
+		//$this->index();
 		header('Access-Control-Allow-Origin: *');
 
 		$this->load->model('User');
@@ -41,7 +41,7 @@ class Controller_Api extends Core_Controller {
       	if(!empty($level) && !empty($user) && !empty($result)){
       		//Calculate score
       		$this->load->library('Score');
-         	$score = $this->Score->grind($level['targetScore'], $result);
+         	$score = $this->LibScore->grind($level[0]['targetScore'], $result);
 
          	//Check if score is positive
 	         if($score > 0) {
@@ -58,7 +58,7 @@ class Controller_Api extends Core_Controller {
 	            //Remove from queue
 	            $this->ModelLevelPart->removeFromQueue($user['id']);
 	            //Save challenge result
-	            $insert['level_id'] 		= $level['id'];
+	            $insert['level_id'] 		= $level[0]['id'];
 	            $insert['user_id'] 			= $user['id'];
 	            $insert['score'] 			= $score;
 	            $insert['level_completed'] 	= true;
@@ -66,14 +66,14 @@ class Controller_Api extends Core_Controller {
 	            $insert['video_name'] 		= $movie;
 	            $this->ModelLevelHistory->save($insert);
 
-	            $this->JSend->data = $score;
-	            echo $this->JSend->getJson();
+	            $this->LibJsend->data = $score;
+	            echo $this->LibJsend->getJson();
 	            return;
 	         }
 
 	      }
-	      $this->JSend->setStatus(JSend::$FAIL);
-	      $this->JSend->data = "Failed uplouding challenge!";
-	      echo $this->JSend->getJson();
+	      $this->LibJsend->setStatus(Library_Jsend::$FAIL);
+	      $this->LibJsend->data = "Failed uplouding challenge!";
+	      echo $this->LibJsend->getJson();
 	}
 }

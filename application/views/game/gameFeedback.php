@@ -1,7 +1,7 @@
 <div class="feedbackLevel">
-<video width="320" height="240" controls poster="http://media.w3.org/2010/05/sintel/poster.png">
-  	<source src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
-  	<source src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
+<video width="320" height="240" controls poster="<?php echo baseUrl('data/uploads/thumbnail/'.$video) ?>.jpg">
+  	<source src="<?php echo baseUrl('data/uploads/'.$video) ?>.mp4" type="video/mp4">
+  	<!-- <source src="<?php echo baseUrl('data/uploads/'.$video) ?>.ogv" type="video/ogg"> -->
 	Your browser does not support the video tag.
 </video> 
 <h2>Score</h2>

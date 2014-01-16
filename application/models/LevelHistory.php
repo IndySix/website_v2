@@ -59,7 +59,7 @@ class Model_LevelHistory extends Core_Model  {
 				FROM LevelHistory AS LH, Users AS U 
 				WHERE LH.user_id = U.id
 				AND LH.level_completed = 1
-				AND LH.score = (SELECT max(score) FROM LevelHistory WHERE LH.level_id = level_id AND LH.user_id = user_id)
+				AND LH.score = (SELECT max(score) FROM LevelHistory WHERE LH.level_id = level_id AND LH.user_id = user_id )
 				GROUP BY LH.user_id 
 				ORDER BY highscore DESC LIMIT 20';
 		return $this->db->query($sql);
@@ -94,7 +94,7 @@ class Model_LevelHistory extends Core_Model  {
 					AND U.id = LH.user_id
 					AND L.part = ?
 					AND LH.level_completed = 1
-					AND LH.score = (SELECT max(score) FROM LevelHistory WHERE level_id = L.id AND LH.user_id = user_id )
+					AND LH.score = (SELECT max(score) FROM LevelHistory WHERE level_id = L.id AND U.id = user_id)
 					GROUP BY U.id
 					ORDER BY score DESC
 					LIMIT 5';
