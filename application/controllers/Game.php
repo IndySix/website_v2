@@ -158,11 +158,11 @@ class Controller_Game extends Core_Controller {
 		$levelId 	= $this->uri->segment(3);
 		$userId 	= $this->LibSession->get('user_id');
 
-		$this->ModelApp->setButton('one', '#', 'Level', baseUrl('data/img/'));
-		$this->ModelApp->setButton('two', '#', 'Skills', baseUrl('data/img/'));
-		$this->ModelApp->setButton('three', baseUrl('game/play/'.$levelId), 'Retry', baseUrl('data/img/'));
-		$this->ModelApp->setButton('four', baseUrl('game/stop'), 'Quit', baseUrl('data/img/'));
-		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<span class="stopIcon"></span>');
+		$this->ModelApp->setButton('one', baseUrl('level'), 'Level', baseUrl('data/img/level_button.png'));
+		$this->ModelApp->setButton('two', baseUrl(), 'Skills', baseUrl('data/img/skills_button.png'));
+		$this->ModelApp->setButton('three', baseUrl('game/play/'.$levelId), 'Retry', baseUrl('data/img/retry_button.png'));
+		$this->ModelApp->setButton('four', baseUrl(''), 'Quit', baseUrl('data/img/quit_button.png'));
+		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<img class="mainButLogo" src="'.baseUrl('data/img/next_level_button.png').'"/>');
 		$this->ModelApp->setButton('settings', '');
 
 		$level = $this->ModelLevel->byId($levelId);
