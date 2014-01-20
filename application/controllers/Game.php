@@ -162,10 +162,11 @@ class Controller_Game extends Core_Controller {
 		$this->ModelApp->setButton('two', baseUrl(), 'Skills', baseUrl('data/img/skills_button.png'));
 		$this->ModelApp->setButton('three', baseUrl('game/play/'.$levelId), 'Retry', baseUrl('data/img/retry_button.png'));
 		$this->ModelApp->setButton('four', baseUrl(''), 'Quit', baseUrl('data/img/quit_button.png'));
-		$this->ModelApp->setButton('main', baseUrl('game/stop'), '<img class="mainButLogo" src="'.baseUrl('data/img/next_level_button.png').'"/>');
+		
 		$this->ModelApp->setButton('settings', '');
 
-		$level = $this->ModelLevel->byId($levelId);
+		$level 		= $this->ModelLevel->byId($levelId);
+		$nextLevel 	= $this->ModelLevel->byPartIdAndOrder($level['part'], $level['order']+1);	
 		$savedLevel = $this->ModelLevelHistory->latestsLevelResult($levelId, $userId);
 		$levelStats = $this->ModelLevelHistory->userLevelStats( $levelId, $userId );
 
@@ -176,6 +177,8 @@ class Controller_Game extends Core_Controller {
 
 		$data['video'] = $savedLevel['video_name'];
 		$data['score'] = $savedLevel['score'];
+		$nextLevelId = isset($nextLevel[0]['id']) ? $nextLevel[0]['id'] :  $level['id'];
+		$this->ModelApp->setButton('main', baseUrl('game/play/'.$nextLevelId), '<img class="mainButLogo" src="'.baseUrl('data/img/next_level_button.png').'"/>');
 		//stars and percentage
 		//$data['']
 		$data['trys']	= $levelStats['trys'];
