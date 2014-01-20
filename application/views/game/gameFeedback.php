@@ -1,7 +1,7 @@
 <div class="feedbackLevel">
 <video width="320" height="240" controls poster="<?php echo baseUrl('data/uploads/thumbnail/'.$video) ?>.jpg">
   	<!-- <source src="<?php echo baseUrl('data/uploads/'.$video) ?>.mp4" type="video/mp4"> -->
-  	<source src="<?php echo baseUrl('data/uploads/'.$video) ?>.ogv" type="video/ogg">
+  	<source src="<?php echo baseUrl('data/uploads/'.$video) ?>.ogg" type="video/ogg">
 	Your browser does not support the video tag.
 </video> 
 <h2>Score</h2>
