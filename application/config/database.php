@@ -17,7 +17,7 @@ $user = 'root';
 $password = '';
 
 /* The name of the database you want to connect to */
-$database = 'indysix_2';
+$database = 'indy_web';
 
 /* The port number where the MYSQL server is running on, defautl 3306 */
 $port = '3306';

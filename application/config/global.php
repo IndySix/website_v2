@@ -18,7 +18,7 @@ if (!defined('__SITE_PATH'))
  */
 
 define('__API_KEY', '123');
-define('__BOX_ADDRESS', 'http://145.89.96.209:8000/');
+define('__BOX_ADDRESS', 'http://localhost:8000/');
 
 function datetimeToTimestamp($str) {
     if(substr($str, 0,1) == '0')
